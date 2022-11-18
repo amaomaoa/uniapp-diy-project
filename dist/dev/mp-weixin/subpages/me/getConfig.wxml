@@ -1,0 +1,1 @@
+<view><button open-type="chooseAvatar" bindchooseavatar="{{b}}" w-120 h-120 p-0 mt-20rpx mb-20rpx class="w-120 h-120 p-0 mt-20rpx mb-20rpx"><image src="{{a}}" w-120 h-120 class="w-120 h-120"></image></button><input type="nickname" placeholder="请输入昵称" ml-20rpx class="ml-20rpx" value="{{c}}" bindinput="{{d}}"/></view>

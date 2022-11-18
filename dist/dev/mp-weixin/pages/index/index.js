@@ -3,10 +3,14 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
-    const title = common_vendor.ref("Hello");
+    function goto() {
+      common_vendor.index.navigateTo({
+        url: "/subpages/me/getConfig"
+      });
+    }
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.t(title.value)
+        a: common_vendor.o(goto)
       };
     };
   }
