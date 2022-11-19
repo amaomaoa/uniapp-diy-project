@@ -29,7 +29,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         });
       }
       gotoButtom();
-      refresher.value = false;
+      setTimeout(() => {
+        refresher.value = false;
+      }, 10);
     }
     function gotoButtom() {
       footer.value = "footer";

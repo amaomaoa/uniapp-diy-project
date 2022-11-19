@@ -52,7 +52,9 @@ function addmsg() {
         });
     }
     gotoButtom();
-    refresher.value = false;
+    setTimeout(() => {
+        refresher.value = false;
+    }, 10);
 }
 
 function gotoButtom() {
