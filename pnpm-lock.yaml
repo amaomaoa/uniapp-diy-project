@@ -18,6 +18,8 @@ specifiers:
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3060920221114001
   '@dcloudio/uni-stacktracey': 3.0.0-alpha-3060920221114001
   '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3060920221114001
+  '@iconify-json/carbon': ^1.1.10
+  '@unocss/preset-icons': ^0.46.5
   typescript: ^4.8.3
   unocss: ^0.46.5
   unocss-preset-weapp: ^0.2.1
@@ -47,6 +49,8 @@ devDependencies:
   '@dcloudio/uni-cli-shared': 3.0.0-alpha-3060920221114001_vue@3.2.45
   '@dcloudio/uni-stacktracey': 3.0.0-alpha-3060920221114001
   '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3060920221114001_vite@3.2.4+vue@3.2.45
+  '@iconify-json/carbon': 1.1.10
+  '@unocss/preset-icons': 0.46.5
   typescript: 4.9.3
   unocss: 0.46.5_vite@3.2.4
   unocss-preset-weapp: 0.2.1
@@ -825,6 +829,12 @@ packages:
     os: [linux]
     requiresBuild: true
     optional: true
+
+  /@iconify-json/carbon/1.1.10:
+    resolution: {integrity: sha512-k3/28wk+2CklUPdKBXWhPHQxquvLGiPYk1s6UWdQYR3YtneHRMuCp+0zc9yNjHYBzoSylMIECO0UPH+SdccguA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
 
   /@iconify/types/2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}

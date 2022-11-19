@@ -1,5 +1,6 @@
 import presetWeapp from "unocss-preset-weapp";
-import { defineConfig } from "unocss";
+import { presetIcons, defineConfig } from "unocss";
+
 import {
     transformerAttributify,
     transformerClass,
@@ -9,6 +10,12 @@ export default defineConfig({
     presets: [
         // https://github.com/MellowCo/unocss-preset-weapp
         presetWeapp(),
+        presetIcons({
+            collections: {
+                carbon: () =>
+                    import("@iconify-json/carbon").then((i) => i.icons as any),
+            },
+        }),
     ],
     shortcuts: [
         {

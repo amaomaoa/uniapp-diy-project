@@ -57,6 +57,8 @@
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060920221114001",
     "@dcloudio/uni-stacktracey": "3.0.0-alpha-3060920221114001",
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060920221114001",
+    "@iconify-json/carbon": "^1.1.10",
+    "@unocss/preset-icons": "^0.46.5",
     "typescript": "^4.8.3",
     "unocss": "^0.46.5",
     "unocss-preset-weapp": "^0.2.1",

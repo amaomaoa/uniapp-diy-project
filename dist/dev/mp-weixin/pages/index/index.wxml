@@ -1,1 +1,1 @@
-<view><button bindtap="{{a}}">goto</button></view>
+<view><button bindtap="{{a}}">goto</button><view m2 hover="op80" class="m2"><view i-carbon-logo-github text-3xl text-black class="i-carbon-logo-github text-3xl text-black"/><view i-carbon:3d-cursor text-3xl text-black class="i-carbon-cl-3d-cursor text-3xl text-black"/><button text-black text-3xl i-carbon-sun class="text-black text-3xl i-carbon-sun"/></view><button open-type="getPhoneNumber" bindgetphonenumber="{{b}}"> 登录 </button></view>

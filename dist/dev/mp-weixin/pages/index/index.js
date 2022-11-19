@@ -8,9 +8,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         url: "/subpages/me/getConfig"
       });
     }
+    function getPhoneNumber(e) {
+      console.log(e.detail);
+    }
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.o(goto)
+        a: common_vendor.o(goto),
+        b: common_vendor.o(getPhoneNumber)
       };
     };
   }
