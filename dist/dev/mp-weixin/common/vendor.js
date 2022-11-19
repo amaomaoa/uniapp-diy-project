@@ -1139,62 +1139,6 @@ const onLocaleChange = (fn) => {
 if (typeof global !== "undefined") {
   global.getLocale = getLocale;
 }
-const baseApis = {
-  $on,
-  $off,
-  $once,
-  $emit,
-  upx2px,
-  interceptors,
-  addInterceptor,
-  removeInterceptor,
-  onCreateVueApp,
-  invokeCreateVueAppHook,
-  getLocale,
-  setLocale,
-  onLocaleChange,
-  getPushClientId,
-  onPushMessage,
-  offPushMessage,
-  invokePushCallback
-};
-function initUni(api, protocols2) {
-  const wrapper = initWrapper(protocols2);
-  const UniProxyHandlers = {
-    get(target, key) {
-      if (hasOwn(target, key)) {
-        return target[key];
-      }
-      if (hasOwn(api, key)) {
-        return promisify(key, api[key]);
-      }
-      if (hasOwn(baseApis, key)) {
-        return promisify(key, baseApis[key]);
-      }
-      return promisify(key, wrapper(key, wx[key]));
-    }
-  };
-  return new Proxy({}, UniProxyHandlers);
-}
-function initGetProvider(providers) {
-  return function getProvider2({ service, success, fail, complete }) {
-    let res;
-    if (providers[service]) {
-      res = {
-        errMsg: "getProvider:ok",
-        service,
-        provider: providers[service]
-      };
-      isFunction(success) && success(res);
-    } else {
-      res = {
-        errMsg: "getProvider:fail:\u670D\u52A1[" + service + "]\u4E0D\u5B58\u5728"
-      };
-      isFunction(fail) && fail(res);
-    }
-    isFunction(complete) && complete(res);
-  };
-}
 const UUID_KEY = "__DC_STAT_UUID";
 let deviceId;
 function useDeviceId(global2 = wx) {
@@ -1243,8 +1187,8 @@ function populateParameters(fromRes, toRes) {
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "3.6.7",
-    uniRuntimeVersion: "3.6.7",
+    uniCompileVersion: "3.6.9",
+    uniRuntimeVersion: "3.6.9",
     uniPlatform: "mp-weixin",
     deviceBrand,
     deviceModel: model,
@@ -1409,6 +1353,62 @@ const getAppAuthorizeSetting = {
     }
   }
 };
+const baseApis = {
+  $on,
+  $off,
+  $once,
+  $emit,
+  upx2px,
+  interceptors,
+  addInterceptor,
+  removeInterceptor,
+  onCreateVueApp,
+  invokeCreateVueAppHook,
+  getLocale,
+  setLocale,
+  onLocaleChange,
+  getPushClientId,
+  onPushMessage,
+  offPushMessage,
+  invokePushCallback
+};
+function initUni(api, protocols2) {
+  const wrapper = initWrapper(protocols2);
+  const UniProxyHandlers = {
+    get(target, key) {
+      if (hasOwn(target, key)) {
+        return target[key];
+      }
+      if (hasOwn(api, key)) {
+        return promisify(key, api[key]);
+      }
+      if (hasOwn(baseApis, key)) {
+        return promisify(key, baseApis[key]);
+      }
+      return promisify(key, wrapper(key, wx[key]));
+    }
+  };
+  return new Proxy({}, UniProxyHandlers);
+}
+function initGetProvider(providers) {
+  return function getProvider2({ service, success, fail, complete }) {
+    let res;
+    if (providers[service]) {
+      res = {
+        errMsg: "getProvider:ok",
+        service,
+        provider: providers[service]
+      };
+      isFunction(success) && success(res);
+    } else {
+      res = {
+        errMsg: "getProvider:fail:\u670D\u52A1[" + service + "]\u4E0D\u5B58\u5728"
+      };
+      isFunction(fail) && fail(res);
+    }
+    isFunction(complete) && complete(res);
+  };
+}
 const mocks$1 = ["__route__", "__wxExparserNodeId__", "__wxWebviewId__"];
 const getProvider = initGetProvider({
   oauth: ["weixin"],
@@ -4643,7 +4643,7 @@ function setRef$1(instance, isUnmount = false) {
   }
   const check = $mpPlatform === "mp-baidu" || $mpPlatform === "mp-toutiao";
   const doSetByRefs = (refs) => {
-    const mpComponents = $scope.selectAllComponents(".r").concat($scope.selectAllComponents(".r-i-f"));
+    const mpComponents = ($scope.selectAllComponents(".r") || []).concat($scope.selectAllComponents(".r-i-f") || []);
     return refs.filter((templateRef) => {
       const refValue = findComponentPublicInstance(mpComponents, templateRef.i);
       if (check && refValue === null) {
@@ -4667,6 +4667,12 @@ function setRef$1(instance, isUnmount = false) {
     nextTick$1(instance, doSet);
   }
 }
+function toSkip(value) {
+  if (isObject(value)) {
+    markRaw(value);
+  }
+  return value;
+}
 function findComponentPublicInstance(mpComponents, id) {
   const mpInstance = mpComponents.find((com) => com && (com.properties || com.props).uI === id);
   if (mpInstance) {
@@ -4674,7 +4680,7 @@ function findComponentPublicInstance(mpComponents, id) {
     if (vm) {
       return getExposeProxy(vm.$) || vm;
     }
-    return mpInstance;
+    return toSkip(mpInstance);
   }
   return null;
 }
@@ -4934,7 +4940,7 @@ function injectLifecycleHook(name, hook, publicThis, instance) {
 }
 function initHooks$1(options, instance, publicThis) {
   const mpType = options.mpType || publicThis.$mpType;
-  if (!mpType) {
+  if (!mpType || mpType === "component") {
     return;
   }
   Object.keys(options).forEach((name) => {
@@ -5188,16 +5194,6 @@ function createApp$1(rootComponent, rootProps = null) {
   return createVueApp(rootComponent, rootProps).use(plugin);
 }
 const createSSRApp = createApp$1;
-const eventChannels = {};
-const eventChannelStack = [];
-function getEventChannel(id) {
-  if (id) {
-    const eventChannel = eventChannels[id];
-    delete eventChannels[id];
-    return eventChannel;
-  }
-  return eventChannelStack.shift();
-}
 const MP_METHODS = [
   "createSelectorQuery",
   "createIntersectionObserver",
@@ -5276,9 +5272,6 @@ function callHook(name, args) {
     callHook.call(this, "bm");
     this.$.isMounted = true;
     name = "m";
-  } else if (name === "onLoad" && args && args.__id__) {
-    this.__eventChannel__ = getEventChannel(args.__id__);
-    delete args.__id__;
   }
   const hooks = this.$[name];
   return hooks && invokeArrayFns(hooks, args);

@@ -30,6 +30,8 @@ const avatarUrl = ref(
 const nickname = ref("");
 
 function onChooseAvatar(e: any) {
-    avatarUrl.valueOf = e.detail.avatarUrl;
+    console.log(e.detail);
+
+    avatarUrl.value = e.detail.avatarUrl;
 }
 </script>
