@@ -1,20 +1,19 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+if (!Math) {
+  (ChatBox + MessageInput)();
+}
+const MessageInput = () => "../../components/MessageInput/MessageInput.js";
+const ChatBox = () => "../../components/ChatBox/ChatBox.js";
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
-    function goto() {
-      common_vendor.index.navigateTo({
-        url: "/subpages/me/getConfig"
-      });
-    }
-    function getPhoneNumber(e) {
-      console.log(e.detail);
-    }
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.o(goto),
-        b: common_vendor.o(getPhoneNumber)
+        a: common_vendor.p({
+          ["flex-1"]: true,
+          ["overflow-auto"]: true
+        })
       };
     };
   }

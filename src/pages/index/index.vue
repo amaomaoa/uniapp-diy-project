@@ -1,25 +1,11 @@
 <template>
-    <view>
-        <button @click="goto">goto</button>
-        <view m2 hover="op80">
-            <view i-carbon-logo-github text-3xl text-black />
-            <view i-carbon:3d-cursor text-3xl text-black />
-            <button text-black text-3xl i-carbon-sun />
-        </view>
-        <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
-            登录
-        </button>
+    <view flex flex-col h-100%>
+        <ChatBox flex-1 overflow-auto />
+        <MessageInput />
     </view>
 </template>
 
 <script setup lang="ts">
-function goto() {
-    uni.navigateTo({
-        url: "/subpages/me/getConfig",
-    });
-}
-
-function getPhoneNumber(e: any) {
-    console.log(e.detail);
-}
+import MessageInput from "@/components/MessageInput/MessageInput.vue";
+import ChatBox from "@/components/ChatBox/ChatBox.vue";
 </script>
