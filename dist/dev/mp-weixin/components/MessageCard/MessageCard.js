@@ -5,15 +5,20 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   props: {
     msg: { type: String, required: true },
     type: { type: Number, required: true },
-    color: { type: String, required: true }
+    color: { type: String, required: true },
+    avatar: { type: String, required: true }
   },
   setup(__props) {
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.t(__props.msg)
+        a: __props.avatar,
+        b: common_vendor.n(__props.type == 1 ? "left-avatar" : "right-avatar"),
+        c: common_vendor.t(__props.msg),
+        d: common_vendor.n(__props.type == 1 ? "left-card" : "right-card"),
+        e: common_vendor.n(__props.type == 1 ? "" : "flex-row-reverse")
       };
     };
   }
 });
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/home/bash/i/uniapp-diy-project/src/components/MessageCard/MessageCard.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-a298bbf1"], ["__file", "/home/bash/i/uniapp-diy-project/src/components/MessageCard/MessageCard.vue"]]);
 wx.createComponent(Component);

@@ -1,6 +1,7 @@
 <template>
     <view h-100%>
         <scroll-view
+            :scroll-with-animation="true"
             :scroll-y="true"
             :refresher-triggered="refresher"
             @scroll="dragging"
@@ -14,6 +15,7 @@
                 :msg="m.msg"
                 :color="m.color"
                 :type="m.type"
+                :avatar="m.avatar"
             ></MessageCard>
         </scroll-view>
     </view>
@@ -30,6 +32,7 @@ const msg = ref(
         msg: string;
         type: 1 | 2;
         color: string;
+        avatar: string;
     }>()
 );
 const values = ref(100);
@@ -46,9 +49,15 @@ function addmsg() {
     for (let i = 0; i < 5; i++) {
         values.value--;
         arr.unshift({
-            msg: values.value.toString(),
-            type: 1,
+            msg:
+                `
+            注意点：1. scroll-view要有明确的高度
+2. bottomId和要滚动到的组件的id要一致，且是变化的
+3. 使用setTimeout方法来延迟更改变量
+` + values.value.toString(),
+            type: values.value % 2 == 0 ? 1 : 2,
             color: "red",
+            avatar: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
         });
     }
     setTimeout(() => {
@@ -57,7 +66,7 @@ function addmsg() {
 }
 
 function gotoButtom() {
-    console.log(" gotoButtom");
+    // TODO 还要算一下
     scrollTop.value = msg.value.length * 1000 - 1;
     setTimeout(() => {
         scrollTop.value = msg.value.length * 1000;
