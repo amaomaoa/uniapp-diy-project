@@ -6,16 +6,16 @@ if (!Math) {
 const MessageCard = () => "../MessageCard/MessageCard.js";
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "ChatBox",
-  setup(__props) {
-    const footer = common_vendor.ref("footer");
+  setup(__props, { expose }) {
     const refresher = common_vendor.ref(false);
+    const scrollTop = common_vendor.ref();
     const msg = common_vendor.ref(
       new Array()
     );
     const values = common_vendor.ref(100);
     common_vendor.onMounted(() => {
-      gotoButtom();
       addmsg();
+      gotoButtom();
     });
     function addmsg() {
       refresher.value = true;
@@ -28,16 +28,22 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "red"
         });
       }
-      gotoButtom();
       setTimeout(() => {
         refresher.value = false;
       }, 10);
     }
     function gotoButtom() {
-      footer.value = "footer";
+      console.log(" gotoButtom");
+      scrollTop.value = msg.value.length * 1e3 - 1;
+      setTimeout(() => {
+        scrollTop.value = msg.value.length * 1e3;
+      }, 10);
     }
     function dragging(e) {
     }
+    expose({
+      gotoButtom
+    });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.f(msg.value, (m, k0, i0) => {
@@ -52,7 +58,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }),
         b: refresher.value,
         c: common_vendor.o(dragging),
-        d: footer.value,
+        d: scrollTop.value,
         e: common_vendor.o(addmsg)
       };
     };

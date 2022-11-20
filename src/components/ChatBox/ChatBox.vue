@@ -5,7 +5,7 @@
             :refresher-triggered="refresher"
             @scroll="dragging"
             :refresher-enabled="true"
-            :scroll-into-view="footer"
+            :scroll-top="scrollTop"
             @refresherrefresh="addmsg"
             h-100%
         >
@@ -15,7 +15,6 @@
                 :color="m.color"
                 :type="m.type"
             ></MessageCard>
-            <text id="footer"></text>
         </scroll-view>
     </view>
 </template>
@@ -23,8 +22,9 @@
 <script setup lang="ts">
 import MessageCard from "@/components/MessageCard/MessageCard.vue";
 import { onMounted, ref } from "vue";
-const footer = ref("footer");
+// const footer = ref("footer");
 const refresher = ref(false);
+const scrollTop = ref<Number>();
 const msg = ref(
     new Array<{
         msg: string;
@@ -35,8 +35,8 @@ const msg = ref(
 const values = ref(100);
 
 onMounted(() => {
-    gotoButtom();
     addmsg();
+    gotoButtom();
 });
 
 function addmsg() {
@@ -51,15 +51,21 @@ function addmsg() {
             color: "red",
         });
     }
-    gotoButtom();
     setTimeout(() => {
         refresher.value = false;
     }, 10);
 }
 
 function gotoButtom() {
-    footer.value = "footer";
+    console.log(" gotoButtom");
+    scrollTop.value = msg.value.length * 1000 - 1;
+    setTimeout(() => {
+        scrollTop.value = msg.value.length * 1000;
+    }, 10);
 }
 
 function dragging(e: any) {}
+defineExpose({
+    gotoButtom,
+});
 </script>

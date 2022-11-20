@@ -8,9 +8,22 @@
             flex-1
             text-37
             m-2
+            v-model="msg"
         />
-        <button h-70 m-2 i-carbon-send-alt-filled />
+        <button h-70 m-2 i-carbon-send-alt-filled @click="send" />
     </view>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+
+const emits = defineEmits<{
+    (e: "send", msg: string): void;
+}>();
+
+const msg = ref("");
+
+function send() {
+    emits("send", msg.value);
+}
+</script>
