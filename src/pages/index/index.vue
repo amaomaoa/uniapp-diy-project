@@ -13,7 +13,6 @@ import { ref } from "vue";
 const chatbox = ref<InstanceType<typeof ChatBox> | null>(null);
 
 function send(msg: string) {
-    console.log(msg);
     if (chatbox.value) {
         chatbox.value.gotoButtom();
     }

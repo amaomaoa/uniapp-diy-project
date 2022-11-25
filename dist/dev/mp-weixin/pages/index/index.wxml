@@ -1,1 +1,1 @@
-<view flex flex-col h-100% class="flex flex-col h-100-pes-"><chat-box wx:if="{{b}}" u-r="chatbox" class="flex-1 overflow-auto r" u-i="6f64fe76-0" bind:__l="__l" u-p="{{b}}"/><message-input bindsend="{{c}}" u-i="6f64fe76-1" bind:__l="__l"/></view>
+<view flex flex-col h-100% class="flex flex-col h-100-pes-"><chat-box wx:if="{{b}}" u-r="chatbox" class="flex-1 overflow-auto r" u-i="13027e32-0" bind:__l="__l" u-p="{{b}}"/><message-input bindsend="{{c}}" u-i="13027e32-1" bind:__l="__l"/></view>

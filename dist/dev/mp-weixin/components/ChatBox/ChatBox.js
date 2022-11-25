@@ -52,7 +52,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       return {
         a: common_vendor.f(msg.value, (m, k0, i0) => {
           return {
-            a: "5ce26c22-0-" + i0,
+            a: "3e0dd8d1-0-" + i0,
             b: common_vendor.p({
               msg: m.msg,
               color: m.color,
@@ -69,5 +69,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/home/bash/i/uniapp-diy-project/src/components/ChatBox/ChatBox.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/amao/i/uniapp-diy-project/src/components/ChatBox/ChatBox.vue"]]);
 wx.createComponent(Component);
