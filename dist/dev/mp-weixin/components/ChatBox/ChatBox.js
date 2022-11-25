@@ -23,6 +23,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       for (let i = 0; i < 5; i++) {
         values.value--;
         arr.unshift({
+          idx: values.value,
           msg: `
             \u6CE8\u610F\u70B9\uFF1A1. scroll-view\u8981\u6709\u660E\u786E\u7684\u9AD8\u5EA6
 2. bottomId\u548C\u8981\u6EDA\u52A8\u5230\u7684\u7EC4\u4EF6\u7684id\u8981\u4E00\u81F4\uFF0C\u4E14\u662F\u53D8\u5316\u7684
@@ -52,8 +53,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       return {
         a: common_vendor.f(msg.value, (m, k0, i0) => {
           return {
-            a: "3e0dd8d1-0-" + i0,
-            b: common_vendor.p({
+            a: m.idx,
+            b: "5ce26c22-0-" + i0,
+            c: common_vendor.p({
               msg: m.msg,
               color: m.color,
               type: m.type,
@@ -69,5 +71,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/amao/i/uniapp-diy-project/src/components/ChatBox/ChatBox.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/home/bash/i/uniapp-diy-project/src/components/ChatBox/ChatBox.vue"]]);
 wx.createComponent(Component);

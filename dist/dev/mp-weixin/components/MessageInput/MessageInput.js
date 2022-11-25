@@ -17,5 +17,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/amao/i/uniapp-diy-project/src/components/MessageInput/MessageInput.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/home/bash/i/uniapp-diy-project/src/components/MessageInput/MessageInput.vue"]]);
 wx.createComponent(Component);

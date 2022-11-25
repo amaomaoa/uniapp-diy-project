@@ -12,6 +12,7 @@
         >
             <MessageCard
                 v-for="m in msg"
+                :key="m.idx"
                 :msg="m.msg"
                 :color="m.color"
                 :type="m.type"
@@ -29,6 +30,7 @@ const refresher = ref(false);
 const scrollTop = ref<Number>();
 const msg = ref(
     new Array<{
+        idx: number;
         msg: string;
         type: 1 | 2;
         color: string;
@@ -49,6 +51,7 @@ function addmsg() {
     for (let i = 0; i < 5; i++) {
         values.value--;
         arr.unshift({
+            idx: values.value,
             msg:
                 `
             注意点：1. scroll-view要有明确的高度
