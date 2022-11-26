@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperties(exports, { __esModule: { value: true }, [Symbol.toStringTag]: { value: "Module" } });
 const common_vendor = require("./common/vendor.js");
+const api_user = require("./api/user.js");
+require("./api/index.js");
 if (!Math) {
   "./pages/index/index.js";
   "./subpages/me/getConfig.js";
@@ -10,6 +12,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   setup(__props) {
     common_vendor.onLaunch(() => {
       console.log("App Launch");
+      api_user.login();
     });
     common_vendor.onShow(() => {
       console.log("App Show");
