@@ -24,7 +24,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/home/bash/i/uniapp-diy-project/src/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/amao/i/uniapp-diy-project/src/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   return {
