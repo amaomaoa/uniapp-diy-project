@@ -1,22 +1,29 @@
-import { get, post } from ".";
+import { post } from ".";
 
+import { useUsersStore } from "~/store/user";
 interface LoginResults {
-    tokenName: string;
-    tokenValue: string;
+    saTokenInfo: {
+        tokenName: string;
+        tokenValue: string;
+    };
+    user: User;
 }
 
 export const login = () => {
+    const store = useUsersStore();
+    const { setUser } = store;
     uni.login({
         provider: "weixin",
         success: (data) => {
             post<LoginResults>("/my/public/login", {
                 code: data.code,
             }).then((res) => {
-                const tokenName = res.data.tokenName;
-                const tokenValue = res.data.tokenValue;
+                const data = res.data;
+                const tokenName = data.saTokenInfo.tokenName;
+                const tokenValue = data.saTokenInfo.tokenValue;
                 uni.setStorageSync("tokenName", tokenName);
                 uni.setStorageSync("tokenValue", tokenValue);
-                get("/my/public/checkLogin").then((res) => console.log(res));
+                setUser(res.data.user);
             });
         },
     });

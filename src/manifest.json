@@ -43,7 +43,8 @@
         "appid": "wxefcc018243d6f64a",
         "optimization": { "subPackages": true },
         "setting": {
-            "urlCheck": false
+            "urlCheck": false,
+            "minified": true
         },
         "usingComponents": true,
         "lazyCodeLoading": "requiredComponents"

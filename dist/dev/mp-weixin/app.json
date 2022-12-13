@@ -1,6 +1,8 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/configs/index",
+    "pages/me/index"
   ],
   "subPackages": [
     {
@@ -15,6 +17,32 @@
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#bfbfbf",
+    "selectedColor": "#2c2c2c",
+    "borderStyle": "white",
+    "backgroundColor": "#F8F8F8",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/first/first.png",
+        "selectedIconPath": "static/first/firstChoose.png",
+        "text": "推荐"
+      },
+      {
+        "pagePath": "pages/configs/index",
+        "iconPath": "static/second/second.png",
+        "selectedIconPath": "static/second/secondChoose.png",
+        "text": "配置单"
+      },
+      {
+        "pagePath": "pages/me/index",
+        "iconPath": "static/fourth/fourth.png",
+        "selectedIconPath": "static/fourth/fourthChoose.png",
+        "text": "个人"
+      }
+    ]
   },
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {}

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "uni-app",
+  "navigationBarTitleText": "推荐",
   "usingComponents": {
     "message-input": "../../components/MessageInput/MessageInput",
     "chat-box": "../../components/ChatBox/ChatBox"

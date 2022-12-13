@@ -1,6 +1,5 @@
 <template>
-    <view flex flex-initial center bg-gray-2 pb-2>
-        <button i-carbon-microphone-filled h-70 m-2 />
+    <view flex flex-initial center>
         <textarea
             placeholder="请输入"
             auto-height

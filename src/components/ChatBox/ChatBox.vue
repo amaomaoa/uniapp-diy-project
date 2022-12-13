@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import MessageCard from "@/components/MessageCard/MessageCard.vue";
+import MessageCard from "~/components/MessageCard/MessageCard.vue";
 import { onMounted, ref } from "vue";
 // const footer = ref("footer");
 const refresher = ref(false);
