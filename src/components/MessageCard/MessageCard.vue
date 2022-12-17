@@ -1,5 +1,11 @@
 <template>
-    <view m-2 flex :class="type == 1 ? '' : 'flex-row-reverse'" mt-5>
+    <view
+        text-size-25
+        m-2
+        flex
+        :class="type == 1 ? '' : 'flex-row-reverse'"
+        mt-5
+    >
         <image
             :src="avatar"
             :class="type == 1 ? 'left-avatar' : 'right-avatar'"
@@ -32,29 +38,29 @@ defineProps<{
     background: #00bfb6;
     color: #fff;
     padding: 15rpx;
-    max-width: 350rpx;
+    max-width: 400rpx;
     line-height: 1.5;
     letter-spacing: 2px;
 }
 .left-card::before {
     content: "";
     display: inline-block;
-    border: solid 30rpx transparent;
+    border: solid 20rpx transparent;
     border-right-color: #00bfb6;
     position: absolute;
-    top: 20rpx;
-    left: -55rpx;
+    top: 15rpx;
+    left: -35rpx;
 }
 .left-avatar {
-    width: 100rpx;
-    height: 100rpx;
-    margin-right: 30rpx;
+    width: 80rpx;
+    height: 80rpx;
+    margin-right: 20rpx;
 }
 
 .right-avatar {
-    width: 100rpx;
-    height: 100rpx;
-    margin-left: 30rpx;
+    width: 80rpx;
+    height: 80rpx;
+    margin-left: 20rpx;
 }
 .right-card {
     position: relative;
@@ -62,7 +68,7 @@ defineProps<{
     background: #00bfb6;
     color: #fff;
     padding: 15rpx;
-    max-width: 300rpx;
+    max-width: 400rpx;
     line-height: 1.5;
     letter-spacing: 2px;
 }
@@ -70,10 +76,10 @@ defineProps<{
 .right-card::after {
     content: "";
     display: inline-block;
-    border: solid 30rpx transparent;
+    border: solid 20rpx transparent;
     border-left-color: #00bfb6;
-    top: 20rpx;
-    right: -55rpx;
+    top: 15rpx;
+    right: -35rpx;
     position: absolute;
 }
 </style>

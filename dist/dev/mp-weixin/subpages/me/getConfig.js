@@ -8,7 +8,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     );
     const nickname = common_vendor.ref("");
     function onChooseAvatar(e) {
-      console.log(e.detail);
       avatarUrl.value = e.detail.avatarUrl;
     }
     return (_ctx, _cache) => {

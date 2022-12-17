@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
 import { login } from "./api/user";
+import { useConfigStore } from "~/store/config";
 onLaunch(() => {
     login();
+    const { getMap } = useConfigStore();
+    getMap();
 });
 onShow(() => {});
 onHide(() => {});

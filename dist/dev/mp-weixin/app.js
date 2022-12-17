@@ -2,19 +2,24 @@
 Object.defineProperties(exports, { __esModule: { value: true }, [Symbol.toStringTag]: { value: "Module" } });
 const common_vendor = require("./common/vendor.js");
 const api_user = require("./api/user.js");
+const store_config = require("./store/config.js");
 require("./api/index.js");
 require("./store/user.js");
+require("./api/config.js");
 if (!Math) {
   "./pages/index/index.js";
   "./pages/configs/index.js";
   "./pages/me/index.js";
   "./subpages/me/getConfig.js";
+  "./subpages/configs/addConfig.js";
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "App",
   setup(__props) {
     common_vendor.onLaunch(() => {
       api_user.login();
+      const { getMap } = store_config.useConfigStore();
+      getMap();
     });
     common_vendor.onShow(() => {
     });

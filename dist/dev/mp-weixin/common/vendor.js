@@ -394,12 +394,12 @@ function include(str, parts) {
 function startsWith(str, parts) {
   return parts.find((part) => str.indexOf(part) === 0);
 }
-function normalizeLocale(locale, messages) {
+function normalizeLocale(locale, messages3) {
   if (!locale) {
     return;
   }
   locale = locale.trim().replace(/_/g, "-");
-  if (messages && messages[locale]) {
+  if (messages3 && messages3[locale]) {
     return locale;
   }
   locale = locale.toLowerCase();
@@ -462,19 +462,19 @@ function validateProp$1(name, value, prop, isAbsent) {
   if (!isPlainObject$2(prop)) {
     prop = { type: prop };
   }
-  const { type, required, validator } = prop;
-  if (required && isAbsent) {
+  const { type: type2, required: required2, validator } = prop;
+  if (required2 && isAbsent) {
     return 'Missing required args: "' + name + '"';
   }
-  if (value == null && !required) {
+  if (value == null && !required2) {
     return;
   }
-  if (type != null) {
+  if (type2 != null) {
     let isValid = false;
-    const types = isArray$1(type) ? type : [type];
+    const types2 = isArray$1(type2) ? type2 : [type2];
     const expectedTypes = [];
-    for (let i = 0; i < types.length && !isValid; i++) {
-      const { valid, expectedType } = assertType$1(value, types[i]);
+    for (let i = 0; i < types2.length && !isValid; i++) {
+      const { valid, expectedType } = assertType$1(value, types2[i]);
       expectedTypes.push(expectedType || "");
       isValid = valid;
     }
@@ -487,14 +487,14 @@ function validateProp$1(name, value, prop, isAbsent) {
   }
 }
 const isSimpleType$1 = /* @__PURE__ */ makeMap("String,Number,Boolean,Function,Symbol");
-function assertType$1(value, type) {
+function assertType$1(value, type2) {
   let valid;
-  const expectedType = getType$1(type);
+  const expectedType = getType$1(type2);
   if (isSimpleType$1(expectedType)) {
     const t2 = typeof value;
     valid = t2 === expectedType.toLowerCase();
     if (!valid && t2 === "object") {
-      valid = value instanceof type;
+      valid = value instanceof type2;
     }
   } else if (expectedType === "Object") {
     valid = isObject$1(value);
@@ -502,7 +502,7 @@ function assertType$1(value, type) {
     valid = isArray$1(value);
   } else {
     {
-      valid = value instanceof type;
+      valid = value instanceof type2;
     }
   }
   return {
@@ -529,18 +529,18 @@ function getType$1(ctor) {
   const match = ctor && ctor.toString().match(/^\s*function (\w+)/);
   return match ? match[1] : "";
 }
-function styleValue$1(value, type) {
-  if (type === "String") {
+function styleValue$1(value, type2) {
+  if (type2 === "String") {
     return `"${value}"`;
-  } else if (type === "Number") {
+  } else if (type2 === "Number") {
     return `${Number(value)}`;
   } else {
     return `${value}`;
   }
 }
-function isExplicable$1(type) {
+function isExplicable$1(type2) {
   const explicitTypes = ["string", "number", "boolean"];
-  return explicitTypes.some((elem) => type.toLowerCase() === elem);
+  return explicitTypes.some((elem) => type2.toLowerCase() === elem);
 }
 function isBoolean$1(...args) {
   return args.some((elem) => elem.toLowerCase() === "boolean");
@@ -673,12 +673,12 @@ function wrapperOptions(interceptors2, options = {}) {
   });
   return options;
 }
-function wrapperReturnValue(method, returnValue) {
+function wrapperReturnValue(method3, returnValue) {
   const returnValueHooks = [];
   if (isArray$1(globalInterceptors.returnValue)) {
     returnValueHooks.push(...globalInterceptors.returnValue);
   }
-  const interceptor = scopedInterceptors[method];
+  const interceptor = scopedInterceptors[method3];
   if (interceptor && isArray$1(interceptor.returnValue)) {
     returnValueHooks.push(...interceptor.returnValue);
   }
@@ -687,14 +687,14 @@ function wrapperReturnValue(method, returnValue) {
   });
   return returnValue;
 }
-function getApiInterceptorHooks(method) {
+function getApiInterceptorHooks(method3) {
   const interceptor = /* @__PURE__ */ Object.create(null);
   Object.keys(globalInterceptors).forEach((hook) => {
     if (hook !== "returnValue") {
       interceptor[hook] = globalInterceptors[hook].slice();
     }
   });
-  const scopedInterceptor = scopedInterceptors[method];
+  const scopedInterceptor = scopedInterceptors[method3];
   if (scopedInterceptor) {
     Object.keys(scopedInterceptor).forEach((hook) => {
       if (hook !== "returnValue") {
@@ -704,8 +704,8 @@ function getApiInterceptorHooks(method) {
   }
   return interceptor;
 }
-function invokeApi(method, api, options, params) {
-  const interceptor = getApiInterceptorHooks(method);
+function invokeApi(method3, api, options, params) {
+  const interceptor = getApiInterceptorHooks(method3);
   if (interceptor && Object.keys(interceptor).length) {
     if (isArray$1(interceptor.invoke)) {
       const res = queue$1(interceptor.invoke, options);
@@ -840,16 +840,16 @@ function checkDeviceWidth() {
   deviceDPR = pixelRatio;
   isIOS = platform2 === "ios";
 }
-const upx2px = defineSyncApi(API_UPX2PX, (number2, newDeviceWidth) => {
+const upx2px = defineSyncApi(API_UPX2PX, (number3, newDeviceWidth) => {
   if (deviceWidth === 0) {
     checkDeviceWidth();
   }
-  number2 = Number(number2);
-  if (number2 === 0) {
+  number3 = Number(number3);
+  if (number3 === 0) {
     return 0;
   }
   let width = newDeviceWidth || deviceWidth;
-  let result = number2 / BASE_DEVICE_WIDTH * width;
+  let result = number3 / BASE_DEVICE_WIDTH * width;
   if (result < 0) {
     result = -result;
   }
@@ -861,7 +861,7 @@ const upx2px = defineSyncApi(API_UPX2PX, (number2, newDeviceWidth) => {
       result = 0.5;
     }
   }
-  return number2 < 0 ? -result : result;
+  return number3 < 0 ? -result : result;
 }, Upx2pxProtocol);
 const API_ADD_INTERCEPTOR = "addInterceptor";
 const API_REMOVE_INTERCEPTOR = "removeInterceptor";
@@ -905,22 +905,22 @@ function dedupeHooks(hooks) {
   }
   return res;
 }
-const addInterceptor = defineSyncApi(API_ADD_INTERCEPTOR, (method, interceptor) => {
-  if (isString(method) && isPlainObject$2(interceptor)) {
-    mergeInterceptorHook(scopedInterceptors[method] || (scopedInterceptors[method] = {}), interceptor);
-  } else if (isPlainObject$2(method)) {
-    mergeInterceptorHook(globalInterceptors, method);
+const addInterceptor = defineSyncApi(API_ADD_INTERCEPTOR, (method3, interceptor) => {
+  if (isString(method3) && isPlainObject$2(interceptor)) {
+    mergeInterceptorHook(scopedInterceptors[method3] || (scopedInterceptors[method3] = {}), interceptor);
+  } else if (isPlainObject$2(method3)) {
+    mergeInterceptorHook(globalInterceptors, method3);
   }
 }, AddInterceptorProtocol);
-const removeInterceptor = defineSyncApi(API_REMOVE_INTERCEPTOR, (method, interceptor) => {
-  if (isString(method)) {
+const removeInterceptor = defineSyncApi(API_REMOVE_INTERCEPTOR, (method3, interceptor) => {
+  if (isString(method3)) {
     if (isPlainObject$2(interceptor)) {
-      removeInterceptorHook(scopedInterceptors[method], interceptor);
+      removeInterceptorHook(scopedInterceptors[method3], interceptor);
     } else {
-      delete scopedInterceptors[method];
+      delete scopedInterceptors[method3];
     }
-  } else if (isPlainObject$2(method)) {
-    removeInterceptorHook(globalInterceptors, method);
+  } else if (isPlainObject$2(method3)) {
+    removeInterceptorHook(globalInterceptors, method3);
   }
 }, RemoveInterceptorProtocol);
 const interceptors = {};
@@ -1109,9 +1109,9 @@ function promisify(name, api) {
 }
 const CALLBACKS = ["success", "fail", "cancel", "complete"];
 function initWrapper(protocols2) {
-  function processCallback(methodName, method, returnValue) {
+  function processCallback(methodName, method3, returnValue) {
     return function(res) {
-      return method(processReturnValue(methodName, res, returnValue));
+      return method3(processReturnValue(methodName, res, returnValue));
     };
   }
   function processArgs(methodName, fromArgs, argsOption = {}, returnValue = {}, keepFromArgs = false) {
@@ -1156,9 +1156,9 @@ function initWrapper(protocols2) {
     }
     return processArgs(methodName, res, returnValue, {}, keepReturnValue);
   }
-  return function wrapper(methodName, method) {
+  return function wrapper(methodName, method3) {
     if (!hasOwn(protocols2, methodName)) {
-      return method;
+      return method3;
     }
     const protocol = protocols2[methodName];
     if (!protocol) {
@@ -1716,7 +1716,7 @@ function resetTracking() {
   const last = trackStack.pop();
   shouldTrack = last === void 0 ? true : last;
 }
-function track(target, type, key) {
+function track(target, type2, key) {
   if (shouldTrack && activeEffect) {
     let depsMap = targetMap.get(target);
     if (!depsMap) {
@@ -1726,7 +1726,7 @@ function track(target, type, key) {
     if (!dep) {
       depsMap.set(key, dep = createDep());
     }
-    const eventInfo = { effect: activeEffect, target, type, key };
+    const eventInfo = { effect: activeEffect, target, type: type2, key };
     trackEffects(dep, eventInfo);
   }
 }
@@ -1748,13 +1748,13 @@ function trackEffects(dep, debuggerEventExtraInfo) {
     }
   }
 }
-function trigger(target, type, key, newValue, oldValue, oldTarget) {
+function trigger(target, type2, key, newValue, oldValue, oldTarget) {
   const depsMap = targetMap.get(target);
   if (!depsMap) {
     return;
   }
   let deps = [];
-  if (type === "clear") {
+  if (type2 === "clear") {
     deps = [...depsMap.values()];
   } else if (key === "length" && isArray$1(target)) {
     const newLength = toNumber(newValue);
@@ -1767,7 +1767,7 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
     if (key !== void 0) {
       deps.push(depsMap.get(key));
     }
-    switch (type) {
+    switch (type2) {
       case "add":
         if (!isArray$1(target)) {
           deps.push(depsMap.get(ITERATE_KEY));
@@ -1793,7 +1793,7 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
         break;
     }
   }
-  const eventInfo = { target, type, key, newValue, oldValue, oldTarget };
+  const eventInfo = { target, type: type2, key, newValue, oldValue, oldTarget };
   if (deps.length === 1) {
     if (deps[0]) {
       {
@@ -2094,14 +2094,14 @@ function createForEach(isReadonly2, isShallow2) {
     });
   };
 }
-function createIterableMethod(method, isReadonly2, isShallow2) {
+function createIterableMethod(method3, isReadonly2, isShallow2) {
   return function(...args) {
     const target = this["__v_raw"];
     const rawTarget = toRaw(target);
     const targetIsMap = isMap(rawTarget);
-    const isPair = method === "entries" || method === Symbol.iterator && targetIsMap;
-    const isKeyOnly = method === "keys" && targetIsMap;
-    const innerIterator = target[method](...args);
+    const isPair = method3 === "entries" || method3 === Symbol.iterator && targetIsMap;
+    const isKeyOnly = method3 === "keys" && targetIsMap;
+    const innerIterator = target[method3](...args);
     const wrap = isShallow2 ? toShallow : isReadonly2 ? toReadonly : toReactive;
     !isReadonly2 && track(rawTarget, "iterate", isKeyOnly ? MAP_KEY_ITERATE_KEY : ITERATE_KEY);
     return {
@@ -2118,13 +2118,13 @@ function createIterableMethod(method, isReadonly2, isShallow2) {
     };
   };
 }
-function createReadonlyMethod(type) {
+function createReadonlyMethod(type2) {
   return function(...args) {
     {
       const key = args[0] ? `on key "${args[0]}" ` : ``;
-      console.warn(`${capitalize(type)} operation ${key}failed: target is readonly.`, toRaw(this));
+      console.warn(`${capitalize(type2)} operation ${key}failed: target is readonly.`, toRaw(this));
     }
-    return type === "delete" ? false : this;
+    return type2 === "delete" ? false : this;
   };
 }
 function createInstrumentations() {
@@ -2189,11 +2189,11 @@ function createInstrumentations() {
     forEach: createForEach(true, true)
   };
   const iteratorMethods = ["keys", "values", "entries", Symbol.iterator];
-  iteratorMethods.forEach((method) => {
-    mutableInstrumentations2[method] = createIterableMethod(method, false, false);
-    readonlyInstrumentations2[method] = createIterableMethod(method, true, false);
-    shallowInstrumentations2[method] = createIterableMethod(method, false, true);
-    shallowReadonlyInstrumentations2[method] = createIterableMethod(method, true, true);
+  iteratorMethods.forEach((method3) => {
+    mutableInstrumentations2[method3] = createIterableMethod(method3, false, false);
+    readonlyInstrumentations2[method3] = createIterableMethod(method3, true, false);
+    shallowInstrumentations2[method3] = createIterableMethod(method3, false, true);
+    shallowReadonlyInstrumentations2[method3] = createIterableMethod(method3, true, true);
   });
   return [
     mutableInstrumentations2,
@@ -2231,8 +2231,8 @@ const shallowReadonlyCollectionHandlers = {
 function checkIdentityKeys(target, has2, key) {
   const rawKey = toRaw(key);
   if (rawKey !== key && has2.call(target, rawKey)) {
-    const type = toRawType(target);
-    console.warn(`Reactive ${type} contains both the raw and reactive versions of the same object${type === `Map` ? ` as keys` : ``}, which can lead to inconsistencies. Avoid differentiating between the raw and reactive versions of an object and only use the reactive version if possible.`);
+    const type2 = toRawType(target);
+    console.warn(`Reactive ${type2} contains both the raw and reactive versions of the same object${type2 === `Map` ? ` as keys` : ``}, which can lead to inconsistencies. Avoid differentiating between the raw and reactive versions of an object and only use the reactive version if possible.`);
   }
 }
 const reactiveMap = /* @__PURE__ */ new WeakMap();
@@ -2395,13 +2395,13 @@ const shallowUnwrapHandlers = {
 function proxyRefs(objectWithRefs) {
   return isReactive(objectWithRefs) ? objectWithRefs : new Proxy(objectWithRefs, shallowUnwrapHandlers);
 }
-function toRefs(object2) {
-  if (!isProxy(object2)) {
+function toRefs(object3) {
+  if (!isProxy(object3)) {
     console.warn(`toRefs() expects a reactive object but received a plain one.`);
   }
-  const ret = isArray$1(object2) ? new Array(object2.length) : {};
-  for (const key in object2) {
-    ret[key] = toRef(object2, key);
+  const ret = isArray$1(object3) ? new Array(object3.length) : {};
+  for (const key in object3) {
+    ret[key] = toRef(object3, key);
   }
   return ret;
 }
@@ -2420,9 +2420,9 @@ class ObjectRefImpl {
     this._object[this._key] = newVal;
   }
 }
-function toRef(object2, key, defaultValue) {
-  const val = object2[key];
-  return isRef(val) ? val : new ObjectRefImpl(object2, key, defaultValue);
+function toRef(object3, key, defaultValue) {
+  const val = object3[key];
+  return isRef(val) ? val : new ObjectRefImpl(object3, key, defaultValue);
 }
 var _a;
 class ComputedRefImpl {
@@ -2599,37 +2599,37 @@ const ErrorTypeStrings = {
   [13]: "async component loader",
   [14]: "scheduler flush. This is likely a Vue internals bug. Please open an issue at https://new-issue.vuejs.org/?repo=vuejs/core"
 };
-function callWithErrorHandling(fn, instance, type, args) {
+function callWithErrorHandling(fn, instance, type2, args) {
   let res;
   try {
     res = args ? fn(...args) : fn();
   } catch (err) {
-    handleError(err, instance, type);
+    handleError(err, instance, type2);
   }
   return res;
 }
-function callWithAsyncErrorHandling(fn, instance, type, args) {
+function callWithAsyncErrorHandling(fn, instance, type2, args) {
   if (isFunction(fn)) {
-    const res = callWithErrorHandling(fn, instance, type, args);
+    const res = callWithErrorHandling(fn, instance, type2, args);
     if (res && isPromise(res)) {
       res.catch((err) => {
-        handleError(err, instance, type);
+        handleError(err, instance, type2);
       });
     }
     return res;
   }
   const values = [];
   for (let i = 0; i < fn.length; i++) {
-    values.push(callWithAsyncErrorHandling(fn[i], instance, type, args));
+    values.push(callWithAsyncErrorHandling(fn[i], instance, type2, args));
   }
   return values;
 }
-function handleError(err, instance, type, throwInDev = true) {
+function handleError(err, instance, type2, throwInDev = true) {
   const contextVNode = instance ? instance.vnode : null;
   if (instance) {
     let cur = instance.parent;
     const exposedInstance = instance.proxy;
-    const errorInfo = ErrorTypeStrings[type] || type;
+    const errorInfo = ErrorTypeStrings[type2] || type2;
     while (cur) {
       const errorCapturedHooks = cur.ec;
       if (errorCapturedHooks) {
@@ -2647,11 +2647,11 @@ function handleError(err, instance, type, throwInDev = true) {
       return;
     }
   }
-  logError(err, type, contextVNode, throwInDev);
+  logError(err, type2, contextVNode, throwInDev);
 }
-function logError(err, type, contextVNode, throwInDev = true) {
+function logError(err, type2, contextVNode, throwInDev = true) {
   {
-    const info = ErrorTypeStrings[type] || type;
+    const info = ErrorTypeStrings[type2] || type2;
     if (contextVNode) {
       pushWarningContext(contextVNode);
     }
@@ -2883,8 +2883,8 @@ function createDevtoolsComponentHook(hook) {
 const devtoolsPerfStart = /* @__PURE__ */ createDevtoolsPerformanceHook("perf:start");
 const devtoolsPerfEnd = /* @__PURE__ */ createDevtoolsPerformanceHook("perf:end");
 function createDevtoolsPerformanceHook(hook) {
-  return (component, type, time) => {
-    emit(hook, component.appContext.app, component.uid, component, type, time);
+  return (component, type2, time) => {
+    emit(hook, component.appContext.app, component.uid, component, type2, time);
   };
 }
 function devtoolsComponentEmit(component, event, params) {
@@ -2917,11 +2917,11 @@ function emit$1(instance, event, ...rawArgs) {
   const modelArg = isModelListener2 && event.slice(7);
   if (modelArg && modelArg in props2) {
     const modifiersKey = `${modelArg === "modelValue" ? "model" : modelArg}Modifiers`;
-    const { number: number2, trim: trim2 } = props2[modifiersKey] || EMPTY_OBJ;
+    const { number: number3, trim: trim2 } = props2[modifiersKey] || EMPTY_OBJ;
     if (trim2) {
       args = rawArgs.map((a) => isString(a) ? a.trim() : a);
     }
-    if (number2) {
+    if (number3) {
       args = rawArgs.map(toNumber);
     }
   }
@@ -3237,7 +3237,7 @@ function onActivated(hook, target) {
 function onDeactivated(hook, target) {
   registerKeepAliveHook(hook, "da", target);
 }
-function registerKeepAliveHook(hook, type, target = currentInstance) {
+function registerKeepAliveHook(hook, type2, target = currentInstance) {
   const wrappedHook = hook.__wdc || (hook.__wdc = () => {
     let current = target;
     while (current) {
@@ -3248,36 +3248,36 @@ function registerKeepAliveHook(hook, type, target = currentInstance) {
     }
     return hook();
   });
-  injectHook(type, wrappedHook, target);
+  injectHook(type2, wrappedHook, target);
   if (target) {
     let current = target.parent;
     while (current && current.parent) {
       if (isKeepAlive(current.parent.vnode)) {
-        injectToKeepAliveRoot(wrappedHook, type, target, current);
+        injectToKeepAliveRoot(wrappedHook, type2, target, current);
       }
       current = current.parent;
     }
   }
 }
-function injectToKeepAliveRoot(hook, type, target, keepAliveRoot) {
-  const injected = injectHook(type, hook, keepAliveRoot, true);
+function injectToKeepAliveRoot(hook, type2, target, keepAliveRoot) {
+  const injected = injectHook(type2, hook, keepAliveRoot, true);
   onUnmounted(() => {
-    remove(keepAliveRoot[type], injected);
+    remove(keepAliveRoot[type2], injected);
   }, target);
 }
-function injectHook(type, hook, target = currentInstance, prepend = false) {
+function injectHook(type2, hook, target = currentInstance, prepend = false) {
   if (target) {
-    if (isRootHook(type)) {
+    if (isRootHook(type2)) {
       target = target.root;
     }
-    const hooks = target[type] || (target[type] = []);
+    const hooks = target[type2] || (target[type2] = []);
     const wrappedHook = hook.__weh || (hook.__weh = (...args) => {
       if (target.isUnmounted) {
         return;
       }
       pauseTracking();
       setCurrentInstance(target);
-      const res = callWithAsyncErrorHandling(hook, target, type, args);
+      const res = callWithAsyncErrorHandling(hook, target, type2, args);
       unsetCurrentInstance();
       resetTracking();
       return res;
@@ -3289,7 +3289,7 @@ function injectHook(type, hook, target = currentInstance, prepend = false) {
     }
     return wrappedHook;
   } else {
-    const apiName = toHandlerKey((ErrorTypeStrings[type] || type.replace(/^on/, "")).replace(/ hook$/, ""));
+    const apiName = toHandlerKey((ErrorTypeStrings[type2] || type2.replace(/^on/, "")).replace(/ hook$/, ""));
     warn$1(`${apiName} is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup().`);
   }
 }
@@ -3315,28 +3315,28 @@ const COMPONENTS = "components";
 function resolveComponent(name, maybeSelfReference) {
   return resolveAsset(COMPONENTS, name, true, maybeSelfReference) || name;
 }
-function resolveAsset(type, name, warnMissing = true, maybeSelfReference = false) {
+function resolveAsset(type2, name, warnMissing = true, maybeSelfReference = false) {
   const instance = currentRenderingInstance || currentInstance;
   if (instance) {
     const Component2 = instance.type;
-    if (type === COMPONENTS) {
+    if (type2 === COMPONENTS) {
       const selfName = getComponentName(Component2, false);
       if (selfName && (selfName === name || selfName === camelize(name) || selfName === capitalize(camelize(name)))) {
         return Component2;
       }
     }
-    const res = resolve(instance[type] || Component2[type], name) || resolve(instance.appContext[type], name);
+    const res = resolve(instance[type2] || Component2[type2], name) || resolve(instance.appContext[type2], name);
     if (!res && maybeSelfReference) {
       return Component2;
     }
     if (warnMissing && !res) {
-      const extra = type === COMPONENTS ? `
+      const extra = type2 === COMPONENTS ? `
 If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement.` : ``;
-      warn$1(`Failed to resolve ${type.slice(0, -1)}: ${name}${extra}`);
+      warn$1(`Failed to resolve ${type2.slice(0, -1)}: ${name}${extra}`);
     }
     return res;
   } else {
-    warn$1(`resolve${capitalize(type.slice(0, -1))} can only be used in render() or setup().`);
+    warn$1(`resolve${capitalize(type2.slice(0, -1))} can only be used in render() or setup().`);
   }
 }
 function resolve(registry, name) {
@@ -3368,7 +3368,7 @@ const isReservedPrefix = (key) => key === "_" || key === "$";
 const hasSetupBinding = (state, key) => state !== EMPTY_OBJ && !state.__isScriptSetup && hasOwn(state, key);
 const PublicInstanceProxyHandlers = {
   get({ _: instance }, key) {
-    const { ctx, setupState, data, props: props2, accessCache, type, appContext } = instance;
+    const { ctx, setupState, data, props: props2, accessCache, type: type2, appContext } = instance;
     if (key === "__isVue") {
       return true;
     }
@@ -3409,7 +3409,7 @@ const PublicInstanceProxyHandlers = {
         track(instance, "get", key);
       }
       return publicGetter(instance);
-    } else if ((cssModule = type.__cssModules) && (cssModule = cssModule[key])) {
+    } else if ((cssModule = type2.__cssModules) && (cssModule = cssModule[key])) {
       return cssModule;
     } else if (ctx !== EMPTY_OBJ && hasOwn(ctx, key)) {
       accessCache[key] = 4;
@@ -3525,11 +3525,11 @@ function exposeSetupStateOnRenderContext(instance) {
 }
 function createDuplicateChecker() {
   const cache = /* @__PURE__ */ Object.create(null);
-  return (type, key) => {
+  return (type2, key) => {
     if (cache[key]) {
-      warn$1(`${type} property "${key}" is already defined in ${cache[key]}.`);
+      warn$1(`${type2} property "${key}" is already defined in ${cache[key]}.`);
     } else {
-      cache[key] = type;
+      cache[key] = type2;
     }
   };
 }
@@ -3674,11 +3674,11 @@ function applyOptions$1(instance) {
       callHook$1(created, instance, "c");
     }
   }
-  function registerLifecycleHook(register, hook) {
+  function registerLifecycleHook(register2, hook) {
     if (isArray$1(hook)) {
-      hook.forEach((_hook) => register(_hook.bind(publicThis)));
+      hook.forEach((_hook) => register2(_hook.bind(publicThis)));
     } else if (hook) {
-      register(hook.bind(publicThis));
+      register2(hook.bind(publicThis));
     }
   }
   registerLifecycleHook(onBeforeMount, beforeMount);
@@ -3758,8 +3758,8 @@ function resolveInjections(injectOptions, ctx, checkDuplicateProperties = NOOP, 
     }
   }
 }
-function callHook$1(hook, instance, type) {
-  callWithAsyncErrorHandling(isArray$1(hook) ? hook.map((h) => h.bind(instance.proxy)) : hook.bind(instance.proxy), instance, type);
+function callHook$1(hook, instance, type2) {
+  callWithAsyncErrorHandling(isArray$1(hook) ? hook.map((h) => h.bind(instance.proxy)) : hook.bind(instance.proxy), instance, type2);
 }
 function createWatcher(raw, ctx, publicThis, key) {
   const getter = key.includes(".") ? createPathGetter(publicThis, key) : () => publicThis[key];
@@ -4141,11 +4141,11 @@ function getType(ctor) {
 function isSameType(a, b) {
   return getType(a) === getType(b);
 }
-function getTypeIndex(type, expectedTypes) {
+function getTypeIndex(type2, expectedTypes) {
   if (isArray$1(expectedTypes)) {
-    return expectedTypes.findIndex((t2) => isSameType(t2, type));
+    return expectedTypes.findIndex((t2) => isSameType(t2, type2));
   } else if (isFunction(expectedTypes)) {
-    return isSameType(expectedTypes, type) ? 0 : -1;
+    return isSameType(expectedTypes, type2) ? 0 : -1;
   }
   return -1;
 }
@@ -4160,20 +4160,20 @@ function validateProps(rawProps, props2, instance) {
   }
 }
 function validateProp(name, value, prop, isAbsent) {
-  const { type, required, validator } = prop;
-  if (required && isAbsent) {
+  const { type: type2, required: required2, validator } = prop;
+  if (required2 && isAbsent) {
     warn$1('Missing required prop: "' + name + '"');
     return;
   }
   if (value == null && !prop.required) {
     return;
   }
-  if (type != null && type !== true) {
+  if (type2 != null && type2 !== true) {
     let isValid = false;
-    const types = isArray$1(type) ? type : [type];
+    const types2 = isArray$1(type2) ? type2 : [type2];
     const expectedTypes = [];
-    for (let i = 0; i < types.length && !isValid; i++) {
-      const { valid, expectedType } = assertType(value, types[i]);
+    for (let i = 0; i < types2.length && !isValid; i++) {
+      const { valid, expectedType } = assertType(value, types2[i]);
       expectedTypes.push(expectedType || "");
       isValid = valid;
     }
@@ -4187,14 +4187,14 @@ function validateProp(name, value, prop, isAbsent) {
   }
 }
 const isSimpleType = /* @__PURE__ */ makeMap("String,Number,Boolean,Function,Symbol,BigInt");
-function assertType(value, type) {
+function assertType(value, type2) {
   let valid;
-  const expectedType = getType(type);
+  const expectedType = getType(type2);
   if (isSimpleType(expectedType)) {
     const t2 = typeof value;
     valid = t2 === expectedType.toLowerCase();
     if (!valid && t2 === "object") {
-      valid = value instanceof type;
+      valid = value instanceof type2;
     }
   } else if (expectedType === "Object") {
     valid = isObject$1(value);
@@ -4203,7 +4203,7 @@ function assertType(value, type) {
   } else if (expectedType === "null") {
     valid = value === null;
   } else {
-    valid = value instanceof type;
+    valid = value instanceof type2;
   }
   return {
     valid,
@@ -4225,18 +4225,18 @@ function getInvalidTypeMessage(name, value, expectedTypes) {
   }
   return message;
 }
-function styleValue(value, type) {
-  if (type === "String") {
+function styleValue(value, type2) {
+  if (type2 === "String") {
     return `"${value}"`;
-  } else if (type === "Number") {
+  } else if (type2 === "Number") {
     return `${Number(value)}`;
   } else {
     return `${value}`;
   }
 }
-function isExplicable(type) {
+function isExplicable(type2) {
   const explicitTypes = ["string", "number", "boolean"];
-  return explicitTypes.some((elem) => type.toLowerCase() === elem);
+  return explicitTypes.some((elem) => type2.toLowerCase() === elem);
 }
 function isBoolean(...args) {
   return args.some((elem) => elem.toLowerCase() === "boolean");
@@ -4357,25 +4357,25 @@ function createAppAPI(render, hydrate) {
 }
 let supported;
 let perf;
-function startMeasure(instance, type) {
+function startMeasure(instance, type2) {
   if (instance.appContext.config.performance && isSupported()) {
-    perf.mark(`vue-${type}-${instance.uid}`);
+    perf.mark(`vue-${type2}-${instance.uid}`);
   }
   {
-    devtoolsPerfStart(instance, type, isSupported() ? perf.now() : Date.now());
+    devtoolsPerfStart(instance, type2, isSupported() ? perf.now() : Date.now());
   }
 }
-function endMeasure(instance, type) {
+function endMeasure(instance, type2) {
   if (instance.appContext.config.performance && isSupported()) {
-    const startTag = `vue-${type}-${instance.uid}`;
+    const startTag = `vue-${type2}-${instance.uid}`;
     const endTag = startTag + `:end`;
     perf.mark(endTag);
-    perf.measure(`<${formatComponentName(instance, instance.type)}> ${type}`, startTag, endTag);
+    perf.measure(`<${formatComponentName(instance, instance.type)}> ${type2}`, startTag, endTag);
     perf.clearMarks(startTag);
     perf.clearMarks(endTag);
   }
   {
-    devtoolsPerfEnd(instance, type, isSupported() ? perf.now() : Date.now());
+    devtoolsPerfEnd(instance, type2, isSupported() ? perf.now() : Date.now());
   }
 }
 function isSupported() {
@@ -4407,12 +4407,12 @@ function guardReactiveProps(props2) {
 const emptyAppContext = createAppContext();
 let uid$1 = 0;
 function createComponentInstance(vnode, parent, suspense) {
-  const type = vnode.type;
+  const type2 = vnode.type;
   const appContext = (parent ? parent.appContext : vnode.appContext) || emptyAppContext;
   const instance = {
     uid: uid$1++,
     vnode,
-    type,
+    type: type2,
     parent,
     appContext,
     root: null,
@@ -4431,12 +4431,12 @@ function createComponentInstance(vnode, parent, suspense) {
     renderCache: [],
     components: null,
     directives: null,
-    propsOptions: normalizePropsOptions(type, appContext),
-    emitsOptions: normalizeEmitsOptions(type, appContext),
+    propsOptions: normalizePropsOptions(type2, appContext),
+    emitsOptions: normalizeEmitsOptions(type2, appContext),
     emit: null,
     emitted: null,
     propsDefaults: EMPTY_OBJ,
-    inheritAttrs: type.inheritAttrs,
+    inheritAttrs: type2.inheritAttrs,
     ctx: EMPTY_OBJ,
     data: EMPTY_OBJ,
     props: EMPTY_OBJ,
@@ -4814,8 +4814,8 @@ function nextTick$1(instance, fn) {
 }
 function clone$1(src, seen) {
   src = unwrapper(src);
-  const type = typeof src;
-  if (type === "object" && src !== null) {
+  const type2 = typeof src;
+  if (type2 === "object" && src !== null) {
     let copy = seen.get(src);
     if (typeof copy !== "undefined") {
       return copy;
@@ -4838,7 +4838,7 @@ function clone$1(src, seen) {
     }
     return copy;
   }
-  if (type !== "symbol") {
+  if (type2 !== "symbol") {
     return src;
   }
 }
@@ -5426,11 +5426,11 @@ var plugin = {
   }
 };
 function getCreateApp() {
-  const method = "createApp";
+  const method3 = "createApp";
   if (typeof global !== "undefined") {
-    return global[method];
+    return global[method3];
   } else if (typeof my !== "undefined") {
-    return my[method];
+    return my[method3];
   }
 }
 function vOn(value, key) {
@@ -5631,11 +5631,11 @@ function initBaseInstance(instance, options) {
 function initComponentInstance(instance, options) {
   initBaseInstance(instance, options);
   const ctx = instance.ctx;
-  MP_METHODS.forEach((method) => {
-    ctx[method] = function(...args) {
+  MP_METHODS.forEach((method3) => {
+    ctx[method3] = function(...args) {
       const mpInstance = ctx.$scope;
-      if (mpInstance && mpInstance[method]) {
-        return mpInstance[method].apply(mpInstance, args);
+      if (mpInstance && mpInstance[method3]) {
+        return mpInstance[method3].apply(mpInstance, args);
       }
     };
   });
@@ -5979,14 +5979,14 @@ function initProps(mpComponentOptions) {
   extend(mpComponentOptions.properties, initDefaultProps(mpComponentOptions), initVirtualHostProps(mpComponentOptions.options));
 }
 const PROP_TYPES = [String, Number, Boolean, Object, Array, null];
-function parsePropType(type, defaultValue) {
-  if (isArray$1(type) && type.length === 1) {
-    return type[0];
+function parsePropType(type2, defaultValue) {
+  if (isArray$1(type2) && type2.length === 1) {
+    return type2[0];
   }
-  return type;
+  return type2;
 }
-function normalizePropType(type, defaultValue) {
-  const res = parsePropType(type);
+function normalizePropType(type2, defaultValue) {
+  const res = parsePropType(type2);
   return PROP_TYPES.indexOf(res) !== -1 ? res : null;
 }
 function initPageProps({ properties }, rawProps) {
@@ -6005,8 +6005,8 @@ function initPageProps({ properties }, rawProps) {
         if (isFunction(value)) {
           value = value();
         }
-        const type = opts.type;
-        opts.type = normalizePropType(type);
+        const type2 = opts.type;
+        opts.type = normalizePropType(type2);
         properties[key] = {
           type: opts.type,
           value
@@ -7164,10 +7164,10 @@ const mixin = {
   },
   methods: {
     openPage(urlKey = "url") {
-      const url2 = this[urlKey];
-      if (url2) {
+      const url3 = this[urlKey];
+      if (url3) {
         index$1[this.linkType]({
-          url: url2
+          url: url3
         });
       }
     },
@@ -7257,13 +7257,13 @@ function forEach(obj, fn) {
 function isPlainObject(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
-function deepMerge$1() {
+function deepMerge$2() {
   const result = {};
   function assignValue(val, key) {
     if (typeof result[key] === "object" && typeof val === "object") {
-      result[key] = deepMerge$1(result[key], val);
+      result[key] = deepMerge$2(result[key], val);
     } else if (typeof val === "object") {
-      result[key] = deepMerge$1({}, val);
+      result[key] = deepMerge$2({}, val);
     } else {
       result[key] = val;
     }
@@ -7279,9 +7279,9 @@ function isUndefined(val) {
 function encode(val) {
   return encodeURIComponent(val).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
 }
-function buildURL(url2, params) {
+function buildURL(url3, params) {
   if (!params) {
-    return url2;
+    return url3;
   }
   let serializedParams;
   if (isURLSearchParams(params)) {
@@ -7309,16 +7309,16 @@ function buildURL(url2, params) {
     serializedParams = parts.join("&");
   }
   if (serializedParams) {
-    const hashmarkIndex = url2.indexOf("#");
+    const hashmarkIndex = url3.indexOf("#");
     if (hashmarkIndex !== -1) {
-      url2 = url2.slice(0, hashmarkIndex);
+      url3 = url3.slice(0, hashmarkIndex);
     }
-    url2 += (url2.indexOf("?") === -1 ? "?" : "&") + serializedParams;
+    url3 += (url3.indexOf("?") === -1 ? "?" : "&") + serializedParams;
   }
-  return url2;
+  return url3;
 }
-function isAbsoluteURL(url2) {
-  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url2);
+function isAbsoluteURL(url3) {
+  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url3);
 }
 function combineURLs(baseURL, relativeURL) {
   return relativeURL ? `${baseURL.replace(/\/+$/, "")}/${relativeURL.replace(/^\/+/, "")}` : baseURL;
@@ -7427,20 +7427,20 @@ const mergeKeys = (keys, globalsConfig, config2) => {
   return config3;
 };
 const mergeConfig = (globalsConfig, config2 = {}) => {
-  const method = config2.method || globalsConfig.method || "GET";
+  const method3 = config2.method || globalsConfig.method || "GET";
   let config3 = {
     baseURL: globalsConfig.baseURL || "",
-    method,
+    method: method3,
     url: config2.url || "",
     params: config2.params || {},
     custom: { ...globalsConfig.custom || {}, ...config2.custom || {} },
-    header: deepMerge$1(globalsConfig.header || {}, config2.header || {})
+    header: deepMerge$2(globalsConfig.header || {}, config2.header || {})
   };
   const defaultToConfig2Keys = ["getTask", "validateStatus"];
   config3 = { ...config3, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2) };
-  if (method === "DOWNLOAD")
+  if (method3 === "DOWNLOAD")
     ;
-  else if (method === "UPLOAD") {
+  else if (method3 === "UPLOAD") {
     delete config3.header["content-type"];
     delete config3.header["Content-Type"];
     const uploadKeys = [
@@ -7477,8 +7477,8 @@ const defaults = {
   }
 };
 var clone = function() {
-  function _instanceof(obj, type) {
-    return type != null && obj instanceof type;
+  function _instanceof(obj, type2) {
+    return type2 != null && obj instanceof type2;
   }
   var nativeMap;
   try {
@@ -7702,76 +7702,76 @@ class Request {
   request(config2 = {}) {
     return this.middleware(config2);
   }
-  get(url2, options = {}) {
+  get(url3, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       method: "GET",
       ...options
     });
   }
-  post(url2, data, options = {}) {
+  post(url3, data, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       data,
       method: "POST",
       ...options
     });
   }
-  put(url2, data, options = {}) {
+  put(url3, data, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       data,
       method: "PUT",
       ...options
     });
   }
-  delete(url2, data, options = {}) {
+  delete(url3, data, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       data,
       method: "DELETE",
       ...options
     });
   }
-  connect(url2, data, options = {}) {
+  connect(url3, data, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       data,
       method: "CONNECT",
       ...options
     });
   }
-  head(url2, data, options = {}) {
+  head(url3, data, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       data,
       method: "HEAD",
       ...options
     });
   }
-  options(url2, data, options = {}) {
+  options(url3, data, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       data,
       method: "OPTIONS",
       ...options
     });
   }
-  trace(url2, data, options = {}) {
+  trace(url3, data, options = {}) {
     return this.middleware({
-      url: url2,
+      url: url3,
       data,
       method: "TRACE",
       ...options
     });
   }
-  upload(url2, config2 = {}) {
-    config2.url = url2;
+  upload(url3, config2 = {}) {
+    config2.url = url3;
     config2.method = "UPLOAD";
     return this.middleware(config2);
   }
-  download(url2, config2 = {}) {
-    config2.url = url2;
+  download(url3, config2 = {}) {
+    config2.url = url3;
     config2.method = "DOWNLOAD";
     return this.middleware(config2);
   }
@@ -7789,18 +7789,18 @@ class Router {
     };
     this.route = this.route.bind(this);
   }
-  addRootPath(url2) {
-    return url2[0] === "/" ? url2 : `/${url2}`;
+  addRootPath(url3) {
+    return url3[0] === "/" ? url3 : `/${url3}`;
   }
-  mixinParam(url2, params) {
-    url2 = url2 && this.addRootPath(url2);
+  mixinParam(url3, params) {
+    url3 = url3 && this.addRootPath(url3);
     let query = "";
-    if (/.*\/.*\?.*=.*/.test(url2)) {
+    if (/.*\/.*\?.*=.*/.test(url3)) {
       query = index$1.$u.queryParams(params, false);
-      return url2 += `&${query}`;
+      return url3 += `&${query}`;
     }
     query = index$1.$u.queryParams(params);
-    return url2 += query;
+    return url3 += query;
   }
   async route(options = {}, params = {}) {
     let mergeConfig2 = {};
@@ -7829,32 +7829,32 @@ class Router {
   }
   openPage(config2) {
     const {
-      url: url2,
-      type,
+      url: url3,
+      type: type2,
       delta,
       animationType,
       animationDuration
     } = config2;
     if (config2.type == "navigateTo" || config2.type == "to") {
       index$1.navigateTo({
-        url: url2,
+        url: url3,
         animationType,
         animationDuration
       });
     }
     if (config2.type == "redirectTo" || config2.type == "redirect") {
       index$1.redirectTo({
-        url: url2
+        url: url3
       });
     }
     if (config2.type == "switchTab" || config2.type == "tab") {
       index$1.switchTab({
-        url: url2
+        url: url3
       });
     }
     if (config2.type == "reLaunch" || config2.type == "launch") {
       index$1.reLaunch({
-        url: url2
+        url: url3
       });
     }
     if (config2.type == "navigateBack" || config2.type == "back") {
@@ -7879,12 +7879,12 @@ function colorGradient(startColor = "rgb(0, 0, 0)", endColor = "rgb(255, 255, 25
   const sB = (endB - startB) / step;
   const colorArr = [];
   for (let i = 0; i < step; i++) {
-    let hex = rgbToHex(`rgb(${Math.round(sR * i + startR)},${Math.round(sG * i + startG)},${Math.round(sB * i + startB)})`);
+    let hex2 = rgbToHex(`rgb(${Math.round(sR * i + startR)},${Math.round(sG * i + startG)},${Math.round(sB * i + startB)})`);
     if (i === 0)
-      hex = rgbToHex(startColor);
+      hex2 = rgbToHex(startColor);
     if (i === step - 1)
-      hex = rgbToHex(endColor);
-    colorArr.push(hex);
+      hex2 = rgbToHex(endColor);
+    colorArr.push(hex2);
   }
   return colorArr;
 }
@@ -7921,12 +7921,12 @@ function rgbToHex(rgb) {
     const aColor = _this.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
     let strHex = "#";
     for (let i = 0; i < aColor.length; i++) {
-      let hex = Number(aColor[i]).toString(16);
-      hex = String(hex).length == 1 ? `${0}${hex}` : hex;
-      if (hex === "0") {
-        hex += hex;
+      let hex2 = Number(aColor[i]).toString(16);
+      hex2 = String(hex2).length == 1 ? `${0}${hex2}` : hex2;
+      if (hex2 === "0") {
+        hex2 += hex2;
       }
-      strHex += hex;
+      strHex += hex2;
     }
     if (strHex.length !== 7) {
       strHex = _this;
@@ -7984,20 +7984,20 @@ function mobile(value) {
 function url(value) {
   return /^((https|http|ftp|rtsp|mms):\/\/)(([0-9a-zA-Z_!~*'().&=+$%-]+: )?[0-9a-zA-Z_!~*'().&=+$%-]+@)?(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z].[a-zA-Z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+\/?)$/.test(value);
 }
-function date(value) {
+function date$1(value) {
   if (!value)
     return false;
-  if (number(value))
+  if (number$1(value))
     value = +value;
   return !/Invalid|NaN/.test(new Date(value).toString());
 }
 function dateISO(value) {
   return /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value);
 }
-function number(value) {
+function number$1(value) {
   return /^[\+-]?(\d+\.?\d*|\.\d+|\d\.\d+e\+\d+)$/.test(value);
 }
-function string(value) {
+function string$1(value) {
   return typeof value === "string";
 }
 function digits(value) {
@@ -8036,7 +8036,7 @@ function enOrNum(value) {
 function contains(value, param) {
   return value.indexOf(param) >= 0;
 }
-function range$1(value, param) {
+function range$2(value, param) {
   return value >= param[0] && value <= param[1];
 }
 function rangeLength(value, param) {
@@ -8086,13 +8086,13 @@ function jsonString(value) {
   }
   return false;
 }
-function array(value) {
+function array$1(value) {
   if (typeof Array.isArray === "function") {
     return Array.isArray(value);
   }
   return Object.prototype.toString.call(value) === "[object Array]";
 }
-function object(value) {
+function object$1(value) {
   return Object.prototype.toString.call(value) === "[object Object]";
 }
 function code$1(value, len = 6) {
@@ -8102,7 +8102,7 @@ function func(value) {
   return typeof value === "function";
 }
 function promise(value) {
-  return object(value) && func(value.then) && func(value.catch);
+  return object$1(value) && func(value.then) && func(value.catch);
 }
 function image$1(value) {
   const newValue = value.split("?")[0];
@@ -8120,9 +8120,9 @@ const test = {
   email,
   mobile,
   url,
-  date,
+  date: date$1,
   dateISO,
-  number,
+  number: number$1,
   digits,
   idCard,
   carNo,
@@ -8131,21 +8131,21 @@ const test = {
   letter,
   enOrNum,
   contains,
-  range: range$1,
+  range: range$2,
   rangeLength,
   empty: empty$1,
   isEmpty: empty$1,
   jsonString,
   landline,
-  object,
-  array,
+  object: object$1,
+  array: array$1,
   code: code$1,
   func,
   promise,
   video,
   image: image$1,
   regExp,
-  string
+  string: string$1
 };
 let timeout = null;
 function debounce(func2, wait = 500, immediate = false) {
@@ -8243,7 +8243,7 @@ function round(num, ratio) {
   }
   return result;
 }
-function range(min = 0, max = 0, value = 0) {
+function range$1(min = 0, max = 0, value = 0) {
   return Math.max(min, Math.min(max, Number(value)));
 }
 function getPx(value, unit = false) {
@@ -8354,7 +8354,7 @@ function deepClone(obj) {
   }
   return o2;
 }
-function deepMerge(target = {}, source = {}) {
+function deepMerge$1(target = {}, source = {}) {
   target = deepClone(target);
   if (typeof target !== "object" || typeof source !== "object")
     return false;
@@ -8369,7 +8369,7 @@ function deepMerge(target = {}, source = {}) {
       } else if (target[prop].concat && source[prop].concat) {
         target[prop] = target[prop].concat(source[prop]);
       } else {
-        target[prop] = deepMerge(target[prop], source[prop]);
+        target[prop] = deepMerge$1(target[prop], source[prop]);
       }
     } else {
       target[prop] = source[prop];
@@ -8382,8 +8382,8 @@ function error(err) {
     console.error(`uView\u63D0\u793A\uFF1A${err}`);
   }
 }
-function randomArray(array2 = []) {
-  return array2.sort(() => Math.random() - 0.5);
+function randomArray(array3 = []) {
+  return array3.sort(() => Math.random() - 0.5);
 }
 if (!String.prototype.padStart) {
   String.prototype.padStart = function(maxLength, fillString = " ") {
@@ -8407,25 +8407,25 @@ if (!String.prototype.padStart) {
   };
 }
 function timeFormat(dateTime = null, formatStr = "yyyy-mm-dd") {
-  let date2;
+  let date3;
   if (!dateTime) {
-    date2 = new Date();
+    date3 = new Date();
   } else if (/^\d{10}$/.test(dateTime.toString().trim())) {
-    date2 = new Date(dateTime * 1e3);
+    date3 = new Date(dateTime * 1e3);
   } else if (typeof dateTime === "string" && /^\d+$/.test(dateTime.trim())) {
-    date2 = new Date(Number(dateTime));
+    date3 = new Date(Number(dateTime));
   } else {
-    date2 = new Date(
+    date3 = new Date(
       typeof dateTime === "string" ? dateTime.replace(/-/g, "/") : dateTime
     );
   }
   const timeSource = {
-    "y": date2.getFullYear().toString(),
-    "m": (date2.getMonth() + 1).toString().padStart(2, "0"),
-    "d": date2.getDate().toString().padStart(2, "0"),
-    "h": date2.getHours().toString().padStart(2, "0"),
-    "M": date2.getMinutes().toString().padStart(2, "0"),
-    "s": date2.getSeconds().toString().padStart(2, "0")
+    "y": date3.getFullYear().toString(),
+    "m": (date3.getMonth() + 1).toString().padStart(2, "0"),
+    "d": date3.getDate().toString().padStart(2, "0"),
+    "h": date3.getHours().toString().padStart(2, "0"),
+    "M": date3.getMinutes().toString().padStart(2, "0"),
+    "s": date3.getSeconds().toString().padStart(2, "0")
   };
   for (const key in timeSource) {
     const [ret] = new RegExp(`${key}+`).exec(formatStr) || [];
@@ -8436,7 +8436,7 @@ function timeFormat(dateTime = null, formatStr = "yyyy-mm-dd") {
   }
   return formatStr;
 }
-function timeFrom(timestamp = null, format = "yyyy-mm-dd") {
+function timeFrom(timestamp = null, format2 = "yyyy-mm-dd") {
   if (timestamp == null)
     timestamp = Number(new Date());
   timestamp = parseInt(timestamp);
@@ -8459,14 +8459,14 @@ function timeFrom(timestamp = null, format = "yyyy-mm-dd") {
       tips = `${parseInt(timer / 86400)}\u5929\u524D`;
       break;
     default:
-      if (format === false) {
+      if (format2 === false) {
         if (timer >= 2592e3 && timer < 365 * 86400) {
           tips = `${parseInt(timer / (86400 * 30))}\u4E2A\u6708\u524D`;
         } else {
           tips = `${parseInt(timer / (86400 * 365))}\u5E74\u524D`;
         }
       } else {
-        tips = timeFormat(timestamp, format);
+        tips = timeFormat(timestamp, format2);
       }
   }
   return tips;
@@ -8539,11 +8539,11 @@ function toast$1(title, duration = 2e3) {
     duration
   });
 }
-function type2icon(type = "success", fill = false) {
-  if (["primary", "info", "error", "warning", "success"].indexOf(type) == -1)
-    type = "success";
+function type2icon(type2 = "success", fill = false) {
+  if (["primary", "info", "error", "warning", "success"].indexOf(type2) == -1)
+    type2 = "success";
   let iconName = "";
-  switch (type) {
+  switch (type2) {
     case "primary":
       iconName = "info-circle";
       break;
@@ -8566,9 +8566,9 @@ function type2icon(type = "success", fill = false) {
     iconName += "-fill";
   return iconName;
 }
-function priceFormat(number2, decimals = 0, decimalPoint = ".", thousandsSeparator = ",") {
-  number2 = `${number2}`.replace(/[^0-9+-Ee.]/g, "");
-  const n2 = !isFinite(+number2) ? 0 : +number2;
+function priceFormat(number3, decimals = 0, decimalPoint = ".", thousandsSeparator = ",") {
+  number3 = `${number3}`.replace(/[^0-9+-Ee.]/g, "");
+  const n2 = !isFinite(+number3) ? 0 : +number3;
   const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
   const sep = typeof thousandsSeparator === "undefined" ? "," : thousandsSeparator;
   const dec = typeof decimalPoint === "undefined" ? "." : decimalPoint;
@@ -8677,7 +8677,7 @@ function setConfig({
   index$1.$u.zIndex = deepMerge2(index$1.$u.zIndex, zIndex2);
 }
 const index = {
-  range,
+  range: range$1,
   getPx,
   sleep,
   os,
@@ -8688,7 +8688,7 @@ const index = {
   addStyle,
   addUnit,
   deepClone,
-  deepMerge,
+  deepMerge: deepMerge$1,
   error,
   randomArray,
   timeFormat,
@@ -10031,7 +10031,7 @@ const tooltip = {
     showToast: true
   }
 };
-const transition = {
+const transition$1 = {
   transition: {
     show: false,
     mode: "fade",
@@ -10152,7 +10152,7 @@ const defprops = {
   ...toast,
   ...toolbar,
   ...tooltip,
-  ...transition,
+  ...transition$1,
   ...upload
 };
 const zIndex = {
@@ -10202,205 +10202,109 @@ const install = (Vue) => {
 const uviewPlus = {
   install
 };
-const button = {
-  props: {
-    lang: String,
-    sessionFrom: String,
-    sendMessageTitle: String,
-    sendMessagePath: String,
-    sendMessageImg: String,
-    showMessageCard: Boolean,
-    appParameter: String,
-    formType: String,
-    openType: String
+const MIN_DISTANCE = 10;
+function getDirection(x, y) {
+  if (x > y && x > MIN_DISTANCE) {
+    return "horizontal";
   }
-};
-const openType = {
-  props: {
-    openType: String
-  },
+  if (y > x && y > MIN_DISTANCE) {
+    return "vertical";
+  }
+  return "";
+}
+const touch = {
   methods: {
-    onGetUserInfo(event) {
-      this.$emit("getuserinfo", event.detail);
+    getTouchPoint(e2) {
+      if (!e2) {
+        return {
+          x: 0,
+          y: 0
+        };
+      }
+      if (e2.touches && e2.touches[0]) {
+        return {
+          x: e2.touches[0].pageX,
+          y: e2.touches[0].pageY
+        };
+      }
+      if (e2.changedTouches && e2.changedTouches[0]) {
+        return {
+          x: e2.changedTouches[0].pageX,
+          y: e2.changedTouches[0].pageY
+        };
+      }
+      return {
+        x: e2.clientX || 0,
+        y: e2.clientY || 0
+      };
     },
-    onContact(event) {
-      this.$emit("contact", event.detail);
+    resetTouchStatus() {
+      this.direction = "";
+      this.deltaX = 0;
+      this.deltaY = 0;
+      this.offsetX = 0;
+      this.offsetY = 0;
     },
-    onGetPhoneNumber(event) {
-      this.$emit("getphonenumber", event.detail);
+    touchStart(event) {
+      this.resetTouchStatus();
+      const touch2 = this.getTouchPoint(event);
+      this.startX = touch2.x;
+      this.startY = touch2.y;
     },
-    onError(event) {
-      this.$emit("error", event.detail);
-    },
-    onLaunchApp(event) {
-      this.$emit("launchapp", event.detail);
-    },
-    onOpenSetting(event) {
-      this.$emit("opensetting", event.detail);
+    touchMove(event) {
+      const touch2 = this.getTouchPoint(event);
+      this.deltaX = touch2.x - this.startX;
+      this.deltaY = touch2.y - this.startY;
+      this.offsetX = Math.abs(this.deltaX);
+      this.offsetY = Math.abs(this.deltaY);
+      this.direction = this.direction || getDirection(this.offsetX, this.offsetY);
     }
   }
 };
-const props$2 = {
-  props: {
-    hairline: {
-      type: Boolean,
-      default: defprops.button.hairline
-    },
-    type: {
-      type: String,
-      default: defprops.button.type
-    },
-    size: {
-      type: String,
-      default: defprops.button.size
-    },
-    shape: {
-      type: String,
-      default: defprops.button.shape
-    },
-    plain: {
-      type: Boolean,
-      default: defprops.button.plain
-    },
-    disabled: {
-      type: Boolean,
-      default: defprops.button.disabled
-    },
-    loading: {
-      type: Boolean,
-      default: defprops.button.loading
-    },
-    loadingText: {
-      type: [String, Number],
-      default: defprops.button.loadingText
-    },
-    loadingMode: {
-      type: String,
-      default: defprops.button.loadingMode
-    },
-    loadingSize: {
-      type: [String, Number],
-      default: defprops.button.loadingSize
-    },
-    openType: {
-      type: String,
-      default: defprops.button.openType
-    },
-    formType: {
-      type: String,
-      default: defprops.button.formType
-    },
-    appParameter: {
-      type: String,
-      default: defprops.button.appParameter
-    },
-    hoverStopPropagation: {
-      type: Boolean,
-      default: defprops.button.hoverStopPropagation
-    },
-    lang: {
-      type: String,
-      default: defprops.button.lang
-    },
-    sessionFrom: {
-      type: String,
-      default: defprops.button.sessionFrom
-    },
-    sendMessageTitle: {
-      type: String,
-      default: defprops.button.sendMessageTitle
-    },
-    sendMessagePath: {
-      type: String,
-      default: defprops.button.sendMessagePath
-    },
-    sendMessageImg: {
-      type: String,
-      default: defprops.button.sendMessageImg
-    },
-    showMessageCard: {
-      type: Boolean,
-      default: defprops.button.showMessageCard
-    },
-    dataName: {
-      type: String,
-      default: defprops.button.dataName
-    },
-    throttleTime: {
-      type: [String, Number],
-      default: defprops.button.throttleTime
-    },
-    hoverStartTime: {
-      type: [String, Number],
-      default: defprops.button.hoverStartTime
-    },
-    hoverStayTime: {
-      type: [String, Number],
-      default: defprops.button.hoverStayTime
-    },
-    text: {
-      type: [String, Number],
-      default: defprops.button.text
-    },
-    icon: {
-      type: String,
-      default: defprops.button.icon
-    },
-    iconColor: {
-      type: String,
-      default: defprops.button.icon
-    },
-    color: {
-      type: String,
-      default: defprops.button.color
-    }
-  }
-};
-const props$1 = {
+const props$h = {
   props: {
     show: {
       type: Boolean,
-      default: defprops.loadingIcon.show
+      default: defprops.swipeActionItem.show
     },
-    color: {
-      type: String,
-      default: defprops.loadingIcon.color
+    name: {
+      type: [String, Number],
+      default: defprops.swipeActionItem.name
     },
-    textColor: {
-      type: String,
-      default: defprops.loadingIcon.textColor
-    },
-    vertical: {
+    disabled: {
       type: Boolean,
-      default: defprops.loadingIcon.vertical
+      default: defprops.swipeActionItem.disabled
     },
-    mode: {
-      type: String,
-      default: defprops.loadingIcon.mode
+    autoClose: {
+      type: Boolean,
+      default: defprops.swipeActionItem.autoClose
     },
-    size: {
-      type: [String, Number],
-      default: defprops.loadingIcon.size
+    threshold: {
+      type: Number,
+      default: defprops.swipeActionItem.threshold
     },
-    textSize: {
-      type: [String, Number],
-      default: defprops.loadingIcon.textSize
-    },
-    text: {
-      type: [String, Number],
-      default: defprops.loadingIcon.text
-    },
-    timingFunction: {
-      type: String,
-      default: defprops.loadingIcon.timingFunction
+    options: {
+      type: Array,
+      default() {
+        return index$1.$u.props.swipeActionItem.rightOptions;
+      }
     },
     duration: {
       type: [String, Number],
-      default: defprops.loadingIcon.duration
+      default: defprops.swipeActionItem.duration
+    }
+  }
+};
+const wxs = {
+  methods: {
+    closeHandler() {
+      this.status = "close";
     },
-    inactiveColor: {
-      type: String,
-      default: defprops.loadingIcon.inactiveColor
+    setState(status) {
+      this.status = status;
+    },
+    closeOther() {
+      this.parent && this.parent.closeOther(this);
     }
   }
 };
@@ -10618,7 +10522,7 @@ const icons = {
   "uicon-zh": "\uE70A",
   "uicon-en": "\uE692"
 };
-const props = {
+const props$g = {
   props: {
     name: {
       type: String,
@@ -10690,9 +10594,1667 @@ const props = {
     }
   }
 };
+const props$f = {
+  props: {
+    autoClose: {
+      type: Boolean,
+      default: defprops.swipeAction.autoClose
+    }
+  }
+};
+const props$e = {
+  props: {
+    show: {
+      type: Boolean,
+      default: defprops.modal.show
+    },
+    title: {
+      type: [String],
+      default: defprops.modal.title
+    },
+    content: {
+      type: String,
+      default: defprops.modal.content
+    },
+    confirmText: {
+      type: String,
+      default: defprops.modal.confirmText
+    },
+    cancelText: {
+      type: String,
+      default: defprops.modal.cancelText
+    },
+    showConfirmButton: {
+      type: Boolean,
+      default: defprops.modal.showConfirmButton
+    },
+    showCancelButton: {
+      type: Boolean,
+      default: defprops.modal.showCancelButton
+    },
+    confirmColor: {
+      type: String,
+      default: defprops.modal.confirmColor
+    },
+    cancelColor: {
+      type: String,
+      default: defprops.modal.cancelColor
+    },
+    buttonReverse: {
+      type: Boolean,
+      default: defprops.modal.buttonReverse
+    },
+    zoom: {
+      type: Boolean,
+      default: defprops.modal.zoom
+    },
+    asyncClose: {
+      type: Boolean,
+      default: defprops.modal.asyncClose
+    },
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: defprops.modal.closeOnClickOverlay
+    },
+    negativeTop: {
+      type: [String, Number],
+      default: defprops.modal.negativeTop
+    },
+    width: {
+      type: [String, Number],
+      default: defprops.modal.width
+    },
+    confirmButtonShape: {
+      type: String,
+      default: defprops.modal.confirmButtonShape
+    }
+  }
+};
+const props$d = {
+  props: {
+    title: {
+      type: [String, Number],
+      default: defprops.cell.title
+    },
+    label: {
+      type: [String, Number],
+      default: defprops.cell.label
+    },
+    value: {
+      type: [String, Number],
+      default: defprops.cell.value
+    },
+    icon: {
+      type: String,
+      default: defprops.cell.icon
+    },
+    disabled: {
+      type: Boolean,
+      default: defprops.cell.disabled
+    },
+    border: {
+      type: Boolean,
+      default: defprops.cell.border
+    },
+    center: {
+      type: Boolean,
+      default: defprops.cell.center
+    },
+    url: {
+      type: String,
+      default: defprops.cell.url
+    },
+    linkType: {
+      type: String,
+      default: defprops.cell.linkType
+    },
+    clickable: {
+      type: Boolean,
+      default: defprops.cell.clickable
+    },
+    isLink: {
+      type: Boolean,
+      default: defprops.cell.isLink
+    },
+    required: {
+      type: Boolean,
+      default: defprops.cell.required
+    },
+    rightIcon: {
+      type: String,
+      default: defprops.cell.rightIcon
+    },
+    arrowDirection: {
+      type: String,
+      default: defprops.cell.arrowDirection
+    },
+    iconStyle: {
+      type: [Object, String],
+      default: () => {
+        return index$1.$u.props.cell.iconStyle;
+      }
+    },
+    rightIconStyle: {
+      type: [Object, String],
+      default: () => {
+        return index$1.$u.props.cell.rightIconStyle;
+      }
+    },
+    titleStyle: {
+      type: [Object, String],
+      default: () => {
+        return index$1.$u.props.cell.titleStyle;
+      }
+    },
+    size: {
+      type: String,
+      default: defprops.cell.size
+    },
+    stop: {
+      type: Boolean,
+      default: defprops.cell.stop
+    },
+    name: {
+      type: [Number, String],
+      default: defprops.cell.name
+    }
+  }
+};
+const props$c = {
+  props: {
+    label: {
+      type: String,
+      default: defprops.formItem.label
+    },
+    prop: {
+      type: String,
+      default: defprops.formItem.prop
+    },
+    borderBottom: {
+      type: [String, Boolean],
+      default: defprops.formItem.borderBottom
+    },
+    labelWidth: {
+      type: [String, Number],
+      default: defprops.formItem.labelWidth
+    },
+    rightIcon: {
+      type: String,
+      default: defprops.formItem.rightIcon
+    },
+    leftIcon: {
+      type: String,
+      default: defprops.formItem.leftIcon
+    },
+    required: {
+      type: Boolean,
+      default: defprops.formItem.required
+    },
+    leftIconStyle: {
+      type: [String, Object],
+      default: defprops.formItem.leftIconStyle
+    }
+  }
+};
+const props$b = {
+  props: {
+    model: {
+      type: Object,
+      default: defprops.form.model
+    },
+    rules: {
+      type: [Object, Function, Array],
+      default: defprops.form.rules
+    },
+    errorType: {
+      type: String,
+      default: defprops.form.errorType
+    },
+    borderBottom: {
+      type: Boolean,
+      default: defprops.form.borderBottom
+    },
+    labelPosition: {
+      type: String,
+      default: defprops.form.labelPosition
+    },
+    labelWidth: {
+      type: [String, Number],
+      default: defprops.form.labelWidth
+    },
+    labelAlign: {
+      type: String,
+      default: defprops.form.labelAlign
+    },
+    labelStyle: {
+      type: Object,
+      default: defprops.form.labelStyle
+    }
+  }
+};
+const button = {
+  props: {
+    lang: String,
+    sessionFrom: String,
+    sendMessageTitle: String,
+    sendMessagePath: String,
+    sendMessageImg: String,
+    showMessageCard: Boolean,
+    appParameter: String,
+    formType: String,
+    openType: String
+  }
+};
+const openType = {
+  props: {
+    openType: String
+  },
+  methods: {
+    onGetUserInfo(event) {
+      this.$emit("getuserinfo", event.detail);
+    },
+    onContact(event) {
+      this.$emit("contact", event.detail);
+    },
+    onGetPhoneNumber(event) {
+      this.$emit("getphonenumber", event.detail);
+    },
+    onError(event) {
+      this.$emit("error", event.detail);
+    },
+    onLaunchApp(event) {
+      this.$emit("launchapp", event.detail);
+    },
+    onOpenSetting(event) {
+      this.$emit("opensetting", event.detail);
+    }
+  }
+};
+const props$a = {
+  props: {
+    hairline: {
+      type: Boolean,
+      default: defprops.button.hairline
+    },
+    type: {
+      type: String,
+      default: defprops.button.type
+    },
+    size: {
+      type: String,
+      default: defprops.button.size
+    },
+    shape: {
+      type: String,
+      default: defprops.button.shape
+    },
+    plain: {
+      type: Boolean,
+      default: defprops.button.plain
+    },
+    disabled: {
+      type: Boolean,
+      default: defprops.button.disabled
+    },
+    loading: {
+      type: Boolean,
+      default: defprops.button.loading
+    },
+    loadingText: {
+      type: [String, Number],
+      default: defprops.button.loadingText
+    },
+    loadingMode: {
+      type: String,
+      default: defprops.button.loadingMode
+    },
+    loadingSize: {
+      type: [String, Number],
+      default: defprops.button.loadingSize
+    },
+    openType: {
+      type: String,
+      default: defprops.button.openType
+    },
+    formType: {
+      type: String,
+      default: defprops.button.formType
+    },
+    appParameter: {
+      type: String,
+      default: defprops.button.appParameter
+    },
+    hoverStopPropagation: {
+      type: Boolean,
+      default: defprops.button.hoverStopPropagation
+    },
+    lang: {
+      type: String,
+      default: defprops.button.lang
+    },
+    sessionFrom: {
+      type: String,
+      default: defprops.button.sessionFrom
+    },
+    sendMessageTitle: {
+      type: String,
+      default: defprops.button.sendMessageTitle
+    },
+    sendMessagePath: {
+      type: String,
+      default: defprops.button.sendMessagePath
+    },
+    sendMessageImg: {
+      type: String,
+      default: defprops.button.sendMessageImg
+    },
+    showMessageCard: {
+      type: Boolean,
+      default: defprops.button.showMessageCard
+    },
+    dataName: {
+      type: String,
+      default: defprops.button.dataName
+    },
+    throttleTime: {
+      type: [String, Number],
+      default: defprops.button.throttleTime
+    },
+    hoverStartTime: {
+      type: [String, Number],
+      default: defprops.button.hoverStartTime
+    },
+    hoverStayTime: {
+      type: [String, Number],
+      default: defprops.button.hoverStayTime
+    },
+    text: {
+      type: [String, Number],
+      default: defprops.button.text
+    },
+    icon: {
+      type: String,
+      default: defprops.button.icon
+    },
+    iconColor: {
+      type: String,
+      default: defprops.button.icon
+    },
+    color: {
+      type: String,
+      default: defprops.button.color
+    }
+  }
+};
+const props$9 = {
+  props: {
+    show: {
+      type: Boolean,
+      default: defprops.picker.show
+    },
+    showToolbar: {
+      type: Boolean,
+      default: defprops.picker.showToolbar
+    },
+    title: {
+      type: String,
+      default: defprops.picker.title
+    },
+    columns: {
+      type: Array,
+      default: defprops.picker.columns
+    },
+    loading: {
+      type: Boolean,
+      default: defprops.picker.loading
+    },
+    itemHeight: {
+      type: [String, Number],
+      default: defprops.picker.itemHeight
+    },
+    cancelText: {
+      type: String,
+      default: defprops.picker.cancelText
+    },
+    confirmText: {
+      type: String,
+      default: defprops.picker.confirmText
+    },
+    cancelColor: {
+      type: String,
+      default: defprops.picker.cancelColor
+    },
+    confirmColor: {
+      type: String,
+      default: defprops.picker.confirmColor
+    },
+    visibleItemCount: {
+      type: [String, Number],
+      default: defprops.picker.visibleItemCount
+    },
+    keyName: {
+      type: String,
+      default: defprops.picker.keyName
+    },
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: defprops.picker.closeOnClickOverlay
+    },
+    defaultIndex: {
+      type: Array,
+      default: defprops.picker.defaultIndex
+    },
+    immediateChange: {
+      type: Boolean,
+      default: defprops.picker.immediateChange
+    }
+  }
+};
+const props$8 = {
+  props: {
+    loadingText: {
+      type: [String, Number],
+      default: defprops.loadingPage.loadingText
+    },
+    image: {
+      type: String,
+      default: defprops.loadingPage.image
+    },
+    loadingMode: {
+      type: String,
+      default: defprops.loadingPage.loadingMode
+    },
+    loading: {
+      type: Boolean,
+      default: defprops.loadingPage.loading
+    },
+    bgColor: {
+      type: String,
+      default: defprops.loadingPage.bgColor
+    },
+    color: {
+      type: String,
+      default: defprops.loadingPage.color
+    },
+    fontSize: {
+      type: [String, Number],
+      default: defprops.loadingPage.fontSize
+    },
+    iconSize: {
+      type: [String, Number],
+      default: defprops.loadingPage.fontSize
+    },
+    loadingColor: {
+      type: String,
+      default: defprops.loadingPage.loadingColor
+    }
+  }
+};
+const props$7 = {
+  props: {
+    color: {
+      type: String,
+      default: defprops.line.color
+    },
+    length: {
+      type: [String, Number],
+      default: defprops.line.length
+    },
+    direction: {
+      type: String,
+      default: defprops.line.direction
+    },
+    hairline: {
+      type: Boolean,
+      default: defprops.line.hairline
+    },
+    margin: {
+      type: [String, Number],
+      default: defprops.line.margin
+    },
+    dashed: {
+      type: Boolean,
+      default: defprops.line.dashed
+    }
+  }
+};
+const props$6 = {
+  props: {
+    show: {
+      type: Boolean,
+      default: defprops.loadingIcon.show
+    },
+    color: {
+      type: String,
+      default: defprops.loadingIcon.color
+    },
+    textColor: {
+      type: String,
+      default: defprops.loadingIcon.textColor
+    },
+    vertical: {
+      type: Boolean,
+      default: defprops.loadingIcon.vertical
+    },
+    mode: {
+      type: String,
+      default: defprops.loadingIcon.mode
+    },
+    size: {
+      type: [String, Number],
+      default: defprops.loadingIcon.size
+    },
+    textSize: {
+      type: [String, Number],
+      default: defprops.loadingIcon.textSize
+    },
+    text: {
+      type: [String, Number],
+      default: defprops.loadingIcon.text
+    },
+    timingFunction: {
+      type: String,
+      default: defprops.loadingIcon.timingFunction
+    },
+    duration: {
+      type: [String, Number],
+      default: defprops.loadingIcon.duration
+    },
+    inactiveColor: {
+      type: String,
+      default: defprops.loadingIcon.inactiveColor
+    }
+  }
+};
+const props$5 = {
+  props: {
+    show: {
+      type: Boolean,
+      default: defprops.popup.show
+    },
+    overlay: {
+      type: Boolean,
+      default: defprops.popup.overlay
+    },
+    mode: {
+      type: String,
+      default: defprops.popup.mode
+    },
+    duration: {
+      type: [String, Number],
+      default: defprops.popup.duration
+    },
+    closeable: {
+      type: Boolean,
+      default: defprops.popup.closeable
+    },
+    overlayStyle: {
+      type: [Object, String],
+      default: defprops.popup.overlayStyle
+    },
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: defprops.popup.closeOnClickOverlay
+    },
+    zIndex: {
+      type: [String, Number],
+      default: defprops.popup.zIndex
+    },
+    safeAreaInsetBottom: {
+      type: Boolean,
+      default: defprops.popup.safeAreaInsetBottom
+    },
+    safeAreaInsetTop: {
+      type: Boolean,
+      default: defprops.popup.safeAreaInsetTop
+    },
+    closeIconPos: {
+      type: String,
+      default: defprops.popup.closeIconPos
+    },
+    round: {
+      type: [Boolean, String, Number],
+      default: defprops.popup.round
+    },
+    zoom: {
+      type: Boolean,
+      default: defprops.popup.zoom
+    },
+    bgColor: {
+      type: String,
+      default: defprops.popup.bgColor
+    },
+    overlayOpacity: {
+      type: [Number, String],
+      default: defprops.popup.overlayOpacity
+    }
+  }
+};
+const formatRegExp = /%[sdj%]/g;
+let warning = function warning2() {
+};
+if (typeof process !== "undefined" && process.env && true && typeof window !== "undefined" && typeof document !== "undefined") {
+  warning = function warning3(type2, errors) {
+    if (typeof console !== "undefined" && console.warn) {
+      if (errors.every((e2) => typeof e2 === "string")) {
+        console.warn(type2, errors);
+      }
+    }
+  };
+}
+function convertFieldsError(errors) {
+  if (!errors || !errors.length)
+    return null;
+  const fields = {};
+  errors.forEach((error2) => {
+    const { field } = error2;
+    fields[field] = fields[field] || [];
+    fields[field].push(error2);
+  });
+  return fields;
+}
+function format() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+  let i = 1;
+  const f2 = args[0];
+  const len = args.length;
+  if (typeof f2 === "function") {
+    return f2.apply(null, args.slice(1));
+  }
+  if (typeof f2 === "string") {
+    let str = String(f2).replace(formatRegExp, (x) => {
+      if (x === "%%") {
+        return "%";
+      }
+      if (i >= len) {
+        return x;
+      }
+      switch (x) {
+        case "%s":
+          return String(args[i++]);
+        case "%d":
+          return Number(args[i++]);
+        case "%j":
+          try {
+            return JSON.stringify(args[i++]);
+          } catch (_) {
+            return "[Circular]";
+          }
+          break;
+        default:
+          return x;
+      }
+    });
+    for (let arg = args[i]; i < len; arg = args[++i]) {
+      str += ` ${arg}`;
+    }
+    return str;
+  }
+  return f2;
+}
+function isNativeStringType(type2) {
+  return type2 === "string" || type2 === "url" || type2 === "hex" || type2 === "email" || type2 === "pattern";
+}
+function isEmptyValue(value, type2) {
+  if (value === void 0 || value === null) {
+    return true;
+  }
+  if (type2 === "array" && Array.isArray(value) && !value.length) {
+    return true;
+  }
+  if (isNativeStringType(type2) && typeof value === "string" && !value) {
+    return true;
+  }
+  return false;
+}
+function asyncParallelArray(arr, func2, callback) {
+  const results = [];
+  let total = 0;
+  const arrLength = arr.length;
+  function count(errors) {
+    results.push.apply(results, errors);
+    total++;
+    if (total === arrLength) {
+      callback(results);
+    }
+  }
+  arr.forEach((a) => {
+    func2(a, count);
+  });
+}
+function asyncSerialArray(arr, func2, callback) {
+  let index2 = 0;
+  const arrLength = arr.length;
+  function next(errors) {
+    if (errors && errors.length) {
+      callback(errors);
+      return;
+    }
+    const original = index2;
+    index2 += 1;
+    if (original < arrLength) {
+      func2(arr[original], next);
+    } else {
+      callback([]);
+    }
+  }
+  next([]);
+}
+function flattenObjArr(objArr) {
+  const ret = [];
+  Object.keys(objArr).forEach((k) => {
+    ret.push.apply(ret, objArr[k]);
+  });
+  return ret;
+}
+function asyncMap(objArr, option, func2, callback) {
+  if (option.first) {
+    const _pending = new Promise((resolve2, reject) => {
+      const next = function next2(errors) {
+        callback(errors);
+        return errors.length ? reject({
+          errors,
+          fields: convertFieldsError(errors)
+        }) : resolve2();
+      };
+      const flattenArr = flattenObjArr(objArr);
+      asyncSerialArray(flattenArr, func2, next);
+    });
+    _pending.catch((e2) => e2);
+    return _pending;
+  }
+  let firstFields = option.firstFields || [];
+  if (firstFields === true) {
+    firstFields = Object.keys(objArr);
+  }
+  const objArrKeys = Object.keys(objArr);
+  const objArrLength = objArrKeys.length;
+  let total = 0;
+  const results = [];
+  const pending = new Promise((resolve2, reject) => {
+    const next = function next2(errors) {
+      results.push.apply(results, errors);
+      total++;
+      if (total === objArrLength) {
+        callback(results);
+        return results.length ? reject({
+          errors: results,
+          fields: convertFieldsError(results)
+        }) : resolve2();
+      }
+    };
+    if (!objArrKeys.length) {
+      callback(results);
+      resolve2();
+    }
+    objArrKeys.forEach((key) => {
+      const arr = objArr[key];
+      if (firstFields.indexOf(key) !== -1) {
+        asyncSerialArray(arr, func2, next);
+      } else {
+        asyncParallelArray(arr, func2, next);
+      }
+    });
+  });
+  pending.catch((e2) => e2);
+  return pending;
+}
+function complementError(rule) {
+  return function(oe) {
+    if (oe && oe.message) {
+      oe.field = oe.field || rule.fullField;
+      return oe;
+    }
+    return {
+      message: typeof oe === "function" ? oe() : oe,
+      field: oe.field || rule.fullField
+    };
+  };
+}
+function deepMerge(target, source) {
+  if (source) {
+    for (const s2 in source) {
+      if (source.hasOwnProperty(s2)) {
+        const value = source[s2];
+        if (typeof value === "object" && typeof target[s2] === "object") {
+          target[s2] = { ...target[s2], ...value };
+        } else {
+          target[s2] = value;
+        }
+      }
+    }
+  }
+  return target;
+}
+function required(rule, value, source, errors, options, type2) {
+  if (rule.required && (!source.hasOwnProperty(rule.field) || isEmptyValue(value, type2 || rule.type))) {
+    errors.push(format(options.messages.required, rule.fullField));
+  }
+}
+function whitespace(rule, value, source, errors, options) {
+  if (/^\s+$/.test(value) || value === "") {
+    errors.push(format(options.messages.whitespace, rule.fullField));
+  }
+}
+const pattern = {
+  email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  url: new RegExp(
+    "^(?!mailto:)(?:(?:http|https|ftp)://|//)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$",
+    "i"
+  ),
+  hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i
+};
+var types = {
+  integer: function integer(value) {
+    return /^(-)?\d+$/.test(value);
+  },
+  float: function float(value) {
+    return /^(-)?\d+(\.\d+)?$/.test(value);
+  },
+  array: function array(value) {
+    return Array.isArray(value);
+  },
+  regexp: function regexp(value) {
+    if (value instanceof RegExp) {
+      return true;
+    }
+    try {
+      return !!new RegExp(value);
+    } catch (e2) {
+      return false;
+    }
+  },
+  date: function date(value) {
+    return typeof value.getTime === "function" && typeof value.getMonth === "function" && typeof value.getYear === "function";
+  },
+  number: function number(value) {
+    if (isNaN(value)) {
+      return false;
+    }
+    return typeof +value === "number";
+  },
+  object: function object(value) {
+    return typeof value === "object" && !types.array(value);
+  },
+  method: function method(value) {
+    return typeof value === "function";
+  },
+  email: function email2(value) {
+    return typeof value === "string" && !!value.match(pattern.email) && value.length < 255;
+  },
+  url: function url2(value) {
+    return typeof value === "string" && !!value.match(pattern.url);
+  },
+  hex: function hex(value) {
+    return typeof value === "string" && !!value.match(pattern.hex);
+  }
+};
+function type(rule, value, source, errors, options) {
+  if (rule.required && value === void 0) {
+    required(rule, value, source, errors, options);
+    return;
+  }
+  const custom = ["integer", "float", "array", "regexp", "object", "method", "email", "number", "date", "url", "hex"];
+  const ruleType = rule.type;
+  if (custom.indexOf(ruleType) > -1) {
+    if (!types[ruleType](value)) {
+      errors.push(format(options.messages.types[ruleType], rule.fullField, rule.type));
+    }
+  } else if (ruleType && typeof value !== rule.type) {
+    errors.push(format(options.messages.types[ruleType], rule.fullField, rule.type));
+  }
+}
+function range(rule, value, source, errors, options) {
+  const len = typeof rule.len === "number";
+  const min = typeof rule.min === "number";
+  const max = typeof rule.max === "number";
+  const spRegexp = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+  let val = value;
+  let key = null;
+  const num = typeof value === "number";
+  const str = typeof value === "string";
+  const arr = Array.isArray(value);
+  if (num) {
+    key = "number";
+  } else if (str) {
+    key = "string";
+  } else if (arr) {
+    key = "array";
+  }
+  if (!key) {
+    return false;
+  }
+  if (arr) {
+    val = value.length;
+  }
+  if (str) {
+    val = value.replace(spRegexp, "_").length;
+  }
+  if (len) {
+    if (val !== rule.len) {
+      errors.push(format(options.messages[key].len, rule.fullField, rule.len));
+    }
+  } else if (min && !max && val < rule.min) {
+    errors.push(format(options.messages[key].min, rule.fullField, rule.min));
+  } else if (max && !min && val > rule.max) {
+    errors.push(format(options.messages[key].max, rule.fullField, rule.max));
+  } else if (min && max && (val < rule.min || val > rule.max)) {
+    errors.push(format(options.messages[key].range, rule.fullField, rule.min, rule.max));
+  }
+}
+const ENUM = "enum";
+function enumerable(rule, value, source, errors, options) {
+  rule[ENUM] = Array.isArray(rule[ENUM]) ? rule[ENUM] : [];
+  if (rule[ENUM].indexOf(value) === -1) {
+    errors.push(format(options.messages[ENUM], rule.fullField, rule[ENUM].join(", ")));
+  }
+}
+function pattern$1(rule, value, source, errors, options) {
+  if (rule.pattern) {
+    if (rule.pattern instanceof RegExp) {
+      rule.pattern.lastIndex = 0;
+      if (!rule.pattern.test(value)) {
+        errors.push(format(options.messages.pattern.mismatch, rule.fullField, value, rule.pattern));
+      }
+    } else if (typeof rule.pattern === "string") {
+      const _pattern = new RegExp(rule.pattern);
+      if (!_pattern.test(value)) {
+        errors.push(format(options.messages.pattern.mismatch, rule.fullField, value, rule.pattern));
+      }
+    }
+  }
+}
+const rules = {
+  required,
+  whitespace,
+  type,
+  range,
+  enum: enumerable,
+  pattern: pattern$1
+};
+function string(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value, "string") && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options, "string");
+    if (!isEmptyValue(value, "string")) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+      rules.pattern(rule, value, source, errors, options);
+      if (rule.whitespace === true) {
+        rules.whitespace(rule, value, source, errors, options);
+      }
+    }
+  }
+  callback(errors);
+}
+function method2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function number2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (value === "") {
+      value = void 0;
+    }
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function _boolean(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function regexp2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (!isEmptyValue(value)) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function integer2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function floatFn(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function array2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value, "array") && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options, "array");
+    if (!isEmptyValue(value, "array")) {
+      rules.type(rule, value, source, errors, options);
+      rules.range(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function object2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+const ENUM$1 = "enum";
+function enumerable$1(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (value !== void 0) {
+      rules[ENUM$1](rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function pattern$2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value, "string") && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (!isEmptyValue(value, "string")) {
+      rules.pattern(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function date2(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+    if (!isEmptyValue(value)) {
+      let dateObject;
+      if (typeof value === "number") {
+        dateObject = new Date(value);
+      } else {
+        dateObject = value;
+      }
+      rules.type(rule, dateObject, source, errors, options);
+      if (dateObject) {
+        rules.range(rule, dateObject.getTime(), source, errors, options);
+      }
+    }
+  }
+  callback(errors);
+}
+function required$1(rule, value, callback, source, options) {
+  const errors = [];
+  const type2 = Array.isArray(value) ? "array" : typeof value;
+  rules.required(rule, value, source, errors, options, type2);
+  callback(errors);
+}
+function type$1(rule, value, callback, source, options) {
+  const ruleType = rule.type;
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value, ruleType) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options, ruleType);
+    if (!isEmptyValue(value, ruleType)) {
+      rules.type(rule, value, source, errors, options);
+    }
+  }
+  callback(errors);
+}
+function any(rule, value, callback, source, options) {
+  const errors = [];
+  const validate2 = rule.required || !rule.required && source.hasOwnProperty(rule.field);
+  if (validate2) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback();
+    }
+    rules.required(rule, value, source, errors, options);
+  }
+  callback(errors);
+}
+const validators = {
+  string,
+  method: method2,
+  number: number2,
+  boolean: _boolean,
+  regexp: regexp2,
+  integer: integer2,
+  float: floatFn,
+  array: array2,
+  object: object2,
+  enum: enumerable$1,
+  pattern: pattern$2,
+  date: date2,
+  url: type$1,
+  hex: type$1,
+  email: type$1,
+  required: required$1,
+  any
+};
+function newMessages() {
+  return {
+    default: "Validation error on field %s",
+    required: "%s is required",
+    enum: "%s must be one of %s",
+    whitespace: "%s cannot be empty",
+    date: {
+      format: "%s date %s is invalid for format %s",
+      parse: "%s date could not be parsed, %s is invalid ",
+      invalid: "%s date %s is invalid"
+    },
+    types: {
+      string: "%s is not a %s",
+      method: "%s is not a %s (function)",
+      array: "%s is not an %s",
+      object: "%s is not an %s",
+      number: "%s is not a %s",
+      date: "%s is not a %s",
+      boolean: "%s is not a %s",
+      integer: "%s is not an %s",
+      float: "%s is not a %s",
+      regexp: "%s is not a valid %s",
+      email: "%s is not a valid %s",
+      url: "%s is not a valid %s",
+      hex: "%s is not a valid %s"
+    },
+    string: {
+      len: "%s must be exactly %s characters",
+      min: "%s must be at least %s characters",
+      max: "%s cannot be longer than %s characters",
+      range: "%s must be between %s and %s characters"
+    },
+    number: {
+      len: "%s must equal %s",
+      min: "%s cannot be less than %s",
+      max: "%s cannot be greater than %s",
+      range: "%s must be between %s and %s"
+    },
+    array: {
+      len: "%s must be exactly %s in length",
+      min: "%s cannot be less than %s in length",
+      max: "%s cannot be greater than %s in length",
+      range: "%s must be between %s and %s in length"
+    },
+    pattern: {
+      mismatch: "%s value %s does not match pattern %s"
+    },
+    clone: function clone2() {
+      const cloned = JSON.parse(JSON.stringify(this));
+      cloned.clone = this.clone;
+      return cloned;
+    }
+  };
+}
+const messages = newMessages();
+function Schema(descriptor) {
+  this.rules = null;
+  this._messages = messages;
+  this.define(descriptor);
+}
+Schema.prototype = {
+  messages: function messages2(_messages) {
+    if (_messages) {
+      this._messages = deepMerge(newMessages(), _messages);
+    }
+    return this._messages;
+  },
+  define: function define(rules2) {
+    if (!rules2) {
+      throw new Error("Cannot configure a schema with no rules");
+    }
+    if (typeof rules2 !== "object" || Array.isArray(rules2)) {
+      throw new Error("Rules must be an object");
+    }
+    this.rules = {};
+    let z;
+    let item;
+    for (z in rules2) {
+      if (rules2.hasOwnProperty(z)) {
+        item = rules2[z];
+        this.rules[z] = Array.isArray(item) ? item : [item];
+      }
+    }
+  },
+  validate: function validate(source_, o2, oc) {
+    const _this = this;
+    if (o2 === void 0) {
+      o2 = {};
+    }
+    if (oc === void 0) {
+      oc = function oc2() {
+      };
+    }
+    let source = source_;
+    let options = o2;
+    let callback = oc;
+    if (typeof options === "function") {
+      callback = options;
+      options = {};
+    }
+    if (!this.rules || Object.keys(this.rules).length === 0) {
+      if (callback) {
+        callback();
+      }
+      return Promise.resolve();
+    }
+    function complete(results) {
+      let i;
+      let errors = [];
+      let fields = {};
+      function add2(e2) {
+        if (Array.isArray(e2)) {
+          let _errors;
+          errors = (_errors = errors).concat.apply(_errors, e2);
+        } else {
+          errors.push(e2);
+        }
+      }
+      for (i = 0; i < results.length; i++) {
+        add2(results[i]);
+      }
+      if (!errors.length) {
+        errors = null;
+        fields = null;
+      } else {
+        fields = convertFieldsError(errors);
+      }
+      callback(errors, fields);
+    }
+    if (options.messages) {
+      let messages$1 = this.messages();
+      if (messages$1 === messages) {
+        messages$1 = newMessages();
+      }
+      deepMerge(messages$1, options.messages);
+      options.messages = messages$1;
+    } else {
+      options.messages = this.messages();
+    }
+    let arr;
+    let value;
+    const series = {};
+    const keys = options.keys || Object.keys(this.rules);
+    keys.forEach((z) => {
+      arr = _this.rules[z];
+      value = source[z];
+      arr.forEach((r) => {
+        let rule = r;
+        if (typeof rule.transform === "function") {
+          if (source === source_) {
+            source = { ...source };
+          }
+          value = source[z] = rule.transform(value);
+        }
+        if (typeof rule === "function") {
+          rule = {
+            validator: rule
+          };
+        } else {
+          rule = { ...rule };
+        }
+        rule.validator = _this.getValidationMethod(rule);
+        rule.field = z;
+        rule.fullField = rule.fullField || z;
+        rule.type = _this.getType(rule);
+        if (!rule.validator) {
+          return;
+        }
+        series[z] = series[z] || [];
+        series[z].push({
+          rule,
+          value,
+          source,
+          field: z
+        });
+      });
+    });
+    const errorFields = {};
+    return asyncMap(series, options, (data, doIt) => {
+      const { rule } = data;
+      let deep = (rule.type === "object" || rule.type === "array") && (typeof rule.fields === "object" || typeof rule.defaultField === "object");
+      deep = deep && (rule.required || !rule.required && data.value);
+      rule.field = data.field;
+      function addFullfield(key, schema) {
+        return { ...schema, fullField: `${rule.fullField}.${key}` };
+      }
+      function cb(e2) {
+        if (e2 === void 0) {
+          e2 = [];
+        }
+        let errors = e2;
+        if (!Array.isArray(errors)) {
+          errors = [errors];
+        }
+        if (!options.suppressWarning && errors.length) {
+          Schema.warning("async-validator:", errors);
+        }
+        if (errors.length && rule.message) {
+          errors = [].concat(rule.message);
+        }
+        errors = errors.map(complementError(rule));
+        if (options.first && errors.length) {
+          errorFields[rule.field] = 1;
+          return doIt(errors);
+        }
+        if (!deep) {
+          doIt(errors);
+        } else {
+          if (rule.required && !data.value) {
+            if (rule.message) {
+              errors = [].concat(rule.message).map(complementError(rule));
+            } else if (options.error) {
+              errors = [options.error(rule, format(options.messages.required, rule.field))];
+            } else {
+              errors = [];
+            }
+            return doIt(errors);
+          }
+          let fieldsSchema = {};
+          if (rule.defaultField) {
+            for (const k in data.value) {
+              if (data.value.hasOwnProperty(k)) {
+                fieldsSchema[k] = rule.defaultField;
+              }
+            }
+          }
+          fieldsSchema = { ...fieldsSchema, ...data.rule.fields };
+          for (const f2 in fieldsSchema) {
+            if (fieldsSchema.hasOwnProperty(f2)) {
+              const fieldSchema = Array.isArray(fieldsSchema[f2]) ? fieldsSchema[f2] : [fieldsSchema[f2]];
+              fieldsSchema[f2] = fieldSchema.map(addFullfield.bind(null, f2));
+            }
+          }
+          const schema = new Schema(fieldsSchema);
+          schema.messages(options.messages);
+          if (data.rule.options) {
+            data.rule.options.messages = options.messages;
+            data.rule.options.error = options.error;
+          }
+          schema.validate(data.value, data.rule.options || options, (errs) => {
+            const finalErrors = [];
+            if (errors && errors.length) {
+              finalErrors.push.apply(finalErrors, errors);
+            }
+            if (errs && errs.length) {
+              finalErrors.push.apply(finalErrors, errs);
+            }
+            doIt(finalErrors.length ? finalErrors : null);
+          });
+        }
+      }
+      let res;
+      if (rule.asyncValidator) {
+        res = rule.asyncValidator(rule, data.value, cb, data.source, options);
+      } else if (rule.validator) {
+        res = rule.validator(rule, data.value, cb, data.source, options);
+        if (res === true) {
+          cb();
+        } else if (res === false) {
+          cb(rule.message || `${rule.field} fails`);
+        } else if (res instanceof Array) {
+          cb(res);
+        } else if (res instanceof Error) {
+          cb(res.message);
+        }
+      }
+      if (res && res.then) {
+        res.then(() => cb(), (e2) => cb(e2));
+      }
+    }, (results) => {
+      complete(results);
+    });
+  },
+  getType: function getType2(rule) {
+    if (rule.type === void 0 && rule.pattern instanceof RegExp) {
+      rule.type = "pattern";
+    }
+    if (typeof rule.validator !== "function" && rule.type && !validators.hasOwnProperty(rule.type)) {
+      throw new Error(format("Unknown rule type %s", rule.type));
+    }
+    return rule.type || "string";
+  },
+  getValidationMethod: function getValidationMethod(rule) {
+    if (typeof rule.validator === "function") {
+      return rule.validator;
+    }
+    const keys = Object.keys(rule);
+    const messageIndex = keys.indexOf("message");
+    if (messageIndex !== -1) {
+      keys.splice(messageIndex, 1);
+    }
+    if (keys.length === 1 && keys[0] === "required") {
+      return validators.required;
+    }
+    return validators[this.getType(rule)] || false;
+  }
+};
+Schema.register = function register(type2, validator) {
+  if (typeof validator !== "function") {
+    throw new Error("Cannot register a validator by type, validator is not a function");
+  }
+  validators[type2] = validator;
+};
+Schema.warning = warning;
+Schema.messages = messages;
+const props$4 = {
+  props: {
+    show: {
+      type: Boolean,
+      default: defprops.toolbar.show
+    },
+    cancelText: {
+      type: String,
+      default: defprops.toolbar.cancelText
+    },
+    confirmText: {
+      type: String,
+      default: defprops.toolbar.confirmText
+    },
+    cancelColor: {
+      type: String,
+      default: defprops.toolbar.cancelColor
+    },
+    confirmColor: {
+      type: String,
+      default: defprops.toolbar.confirmColor
+    },
+    title: {
+      type: String,
+      default: defprops.toolbar.title
+    }
+  }
+};
+const props$3 = {
+  props: {
+    show: {
+      type: Boolean,
+      default: defprops.transition.show
+    },
+    mode: {
+      type: String,
+      default: defprops.transition.mode
+    },
+    duration: {
+      type: [String, Number],
+      default: defprops.transition.duration
+    },
+    timingFunction: {
+      type: String,
+      default: defprops.transition.timingFunction
+    }
+  }
+};
+const getClassNames = (name) => ({
+  enter: `u-${name}-enter u-${name}-enter-active`,
+  "enter-to": `u-${name}-enter-to u-${name}-enter-active`,
+  leave: `u-${name}-leave u-${name}-leave-active`,
+  "leave-to": `u-${name}-leave-to u-${name}-leave-active`
+});
+const transition = {
+  methods: {
+    clickHandler() {
+      this.$emit("click");
+    },
+    vueEnter() {
+      const classNames = getClassNames(this.mode);
+      this.status = "enter";
+      this.$emit("beforeEnter");
+      this.inited = true;
+      this.display = true;
+      this.classes = classNames.enter;
+      this.$nextTick(async () => {
+        this.$emit("enter");
+        this.transitionEnded = false;
+        this.$emit("afterEnter");
+        this.classes = classNames["enter-to"];
+      });
+    },
+    vueLeave() {
+      if (!this.display)
+        return;
+      const classNames = getClassNames(this.mode);
+      this.status = "leave";
+      this.$emit("beforeLeave");
+      this.classes = classNames.leave;
+      this.$nextTick(() => {
+        this.transitionEnded = false;
+        this.$emit("leave");
+        setTimeout(this.onTransitionEnd, this.duration);
+        this.classes = classNames["leave-to"];
+      });
+    },
+    onTransitionEnd() {
+      if (this.transitionEnded)
+        return;
+      this.transitionEnded = true;
+      this.$emit(this.status === "leave" ? "afterLeave" : "afterEnter");
+      if (!this.show && this.display) {
+        this.display = false;
+        this.inited = false;
+      }
+    }
+  }
+};
+const props$2 = {
+  props: {
+    show: {
+      type: Boolean,
+      default: defprops.overlay.show
+    },
+    zIndex: {
+      type: [String, Number],
+      default: defprops.overlay.zIndex
+    },
+    duration: {
+      type: [String, Number],
+      default: defprops.overlay.duration
+    },
+    opacity: {
+      type: [String, Number],
+      default: defprops.overlay.opacity
+    }
+  }
+};
+const props$1 = {
+  props: {
+    bgColor: {
+      type: String,
+      default: defprops.statusBar.bgColor
+    }
+  }
+};
+const props = {
+  props: {}
+};
 exports.Pinia = Pinia;
+exports.Schema = Schema;
 exports._export_sfc = _export_sfc;
 exports.button = button;
+exports.computed$1 = computed$1;
 exports.createPinia = createPinia;
 exports.createSSRApp = createSSRApp;
 exports.defineComponent = defineComponent;
@@ -10711,14 +12273,32 @@ exports.onMounted = onMounted;
 exports.onShow = onShow;
 exports.openType = openType;
 exports.p = p;
-exports.props = props$2;
-exports.props$1 = props$1;
-exports.props$2 = props;
+exports.props = props$h;
+exports.props$1 = props$g;
+exports.props$10 = props$7;
+exports.props$11 = props$6;
+exports.props$12 = props$5;
+exports.props$13 = props$4;
+exports.props$14 = props$3;
+exports.props$15 = props$2;
+exports.props$16 = props$1;
+exports.props$17 = props;
+exports.props$2 = props$f;
+exports.props$3 = props$e;
+exports.props$4 = props$d;
+exports.props$5 = props$c;
+exports.props$6 = props$b;
+exports.props$7 = props$a;
+exports.props$8 = props$9;
+exports.props$9 = props$8;
 exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.s = s;
 exports.sr = sr;
 exports.storeToRefs = storeToRefs;
 exports.t = t;
+exports.touch = touch;
+exports.transition = transition;
 exports.unref = unref;
 exports.uviewPlus = uviewPlus;
+exports.wxs = wxs;

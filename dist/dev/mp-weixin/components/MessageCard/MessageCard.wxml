@@ -1,1 +1,1 @@
-<view m-2 flex class="{{[e, 'm-2', 'flex', 'mt-5', 'data-v-a298bbf1']}}" mt-5><image src="{{a}}" class="{{['data-v-a298bbf1', b]}}"></image><view center class="{{[d, 'center', 'data-v-a298bbf1']}}">{{c}}</view><view flex-1 class="flex-1 data-v-a298bbf1"></view></view>
+<view text-size-25 m-2 flex class="{{[e, 'text-size-25', 'm-2', 'flex', 'mt-5', 'data-v-a298bbf1']}}" mt-5><image src="{{a}}" class="{{['data-v-a298bbf1', b]}}"></image><view center class="{{[d, 'center', 'data-v-a298bbf1']}}">{{c}}</view><view flex-1 class="flex-1 data-v-a298bbf1"></view></view>

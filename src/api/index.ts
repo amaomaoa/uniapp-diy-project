@@ -1,6 +1,6 @@
 import { login } from "./user";
 
-const baseUrl = "http://127.0.0.1:8080";
+export const baseUrl = "http://127.0.0.1:8080";
 interface Params {
     [key: string]: string | number;
 }
@@ -21,7 +21,7 @@ function appendParamsToApi(api: string, params: Params) {
     return api;
 }
 
-function getToken() {
+export function getToken() {
     let tokenName = uni.getStorageSync("tokenName");
     let tokenValue = "Bearer " + uni.getStorageSync("tokenValue");
     if (tokenName == null || tokenName == "") return {};
@@ -47,6 +47,9 @@ export function request<T>(api: string, options?: any) {
                 ...options.header,
             },
             success: (res: any) => {
+                if (res.code == 401) {
+                    login();
+                }
                 resolve(res.data);
             },
             fail: (err) => {

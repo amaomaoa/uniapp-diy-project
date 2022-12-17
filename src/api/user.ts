@@ -1,5 +1,4 @@
-import { post } from ".";
-
+import { get, post, put } from ".";
 import { useUsersStore } from "~/store/user";
 interface LoginResults {
     saTokenInfo: {
@@ -8,6 +7,7 @@ interface LoginResults {
     };
     user: User;
 }
+const baseApi = "/my/public";
 
 export const login = () => {
     const store = useUsersStore();
@@ -15,7 +15,7 @@ export const login = () => {
     uni.login({
         provider: "weixin",
         success: (data) => {
-            post<LoginResults>("/my/public/login", {
+            post<LoginResults>(`${baseApi}/login`, {
                 code: data.code,
             }).then((res) => {
                 const data = res.data;
@@ -26,5 +26,15 @@ export const login = () => {
                 setUser(res.data.user);
             });
         },
+    });
+};
+
+export const userMsg = () => {
+    return get<User>(`${baseApi}/getUserMsg`);
+};
+
+export const updateUserName = (name: string) => {
+    return put<User>(`${baseApi}/updateUserName`, undefined, {
+        name: name,
     });
 };

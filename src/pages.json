@@ -66,6 +66,12 @@
                     "style": {
                         "navigationBarTitleText": "获取用户昵称和头像"
                     }
+                },
+                {
+                    "path": "configs/addConfig",
+                    "style": {
+                        "navigationBarTitleText": "配件单信息"
+                    }
                 }
             ]
         }

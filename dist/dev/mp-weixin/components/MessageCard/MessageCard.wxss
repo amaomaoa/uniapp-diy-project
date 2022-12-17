@@ -5,28 +5,28 @@
     background: #00bfb6;
     color: #fff;
     padding: 15rpx;
-    max-width: 350rpx;
+    max-width: 400rpx;
     line-height: 1.5;
     letter-spacing: 2px;
 }
 .left-card.data-v-a298bbf1::before {
     content: "";
     display: inline-block;
-    border: solid 30rpx transparent;
+    border: solid 20rpx transparent;
     border-right-color: #00bfb6;
     position: absolute;
-    top: 20rpx;
-    left: -55rpx;
+    top: 15rpx;
+    left: -35rpx;
 }
 .left-avatar.data-v-a298bbf1 {
-    width: 100rpx;
-    height: 100rpx;
-    margin-right: 30rpx;
+    width: 80rpx;
+    height: 80rpx;
+    margin-right: 20rpx;
 }
 .right-avatar.data-v-a298bbf1 {
-    width: 100rpx;
-    height: 100rpx;
-    margin-left: 30rpx;
+    width: 80rpx;
+    height: 80rpx;
+    margin-left: 20rpx;
 }
 .right-card.data-v-a298bbf1 {
     position: relative;
@@ -34,16 +34,16 @@
     background: #00bfb6;
     color: #fff;
     padding: 15rpx;
-    max-width: 300rpx;
+    max-width: 400rpx;
     line-height: 1.5;
     letter-spacing: 2px;
 }
 .right-card.data-v-a298bbf1::after {
     content: "";
     display: inline-block;
-    border: solid 30rpx transparent;
+    border: solid 20rpx transparent;
     border-left-color: #00bfb6;
-    top: 20rpx;
-    right: -55rpx;
+    top: 15rpx;
+    right: -35rpx;
     position: absolute;
 }
