@@ -33,3 +33,7 @@ export const getCateAcce = (id: number | string, configs: Configs) => {
 export const deleteConfig = (id: string | number) => {
     return deleting<Boolean>(`${baseApi}/removeUserConfigs/${id}`);
 };
+
+export const recommendConfigs = (text: string) => {
+    return get<RecommendVo>(`${baseApi}/recommend?text=${text}`);
+};

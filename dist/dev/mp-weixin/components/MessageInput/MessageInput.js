@@ -2,17 +2,28 @@
 const common_vendor = require("../../common/vendor.js");
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "MessageInput",
+  props: {
+    free: { type: Boolean, required: true }
+  },
   emits: ["send"],
   setup(__props, { emit: emits }) {
+    const porps = __props;
     const msg = common_vendor.ref("");
     function send() {
-      emits("send", msg.value);
+      if (msg.value && porps.free) {
+        emits("send", msg.value);
+        msg.value = "";
+      }
     }
     return (_ctx, _cache) => {
       return {
-        a: msg.value,
-        b: common_vendor.o(($event) => msg.value = $event.detail.value),
-        c: common_vendor.o(send)
+        a: common_vendor.o(send),
+        b: msg.value,
+        c: common_vendor.o(($event) => msg.value = $event.detail.value),
+        d: !__props.free,
+        e: !__props.free,
+        f: common_vendor.o(send),
+        g: common_vendor.n(__props.free ? "i-carbon-send-alt-filled" : "")
       };
     };
   }

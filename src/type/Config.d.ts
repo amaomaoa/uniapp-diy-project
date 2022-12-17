@@ -65,4 +65,14 @@ interface Configs {
      * 价格
      */
     price?: number | string;
+
+    /**
+     * 备注
+     */
+    remark: string;
+}
+
+interface RecommendVo {
+    label: string[];
+    diyAccessoriesList: Configs;
 }

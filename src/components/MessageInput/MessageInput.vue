@@ -1,6 +1,8 @@
 <template>
     <view flex flex-initial center>
         <textarea
+            confirm-type="search"
+            @confirm="send"
             placeholder="请输入"
             auto-height
             maxlength="100"
@@ -9,7 +11,16 @@
             m-2
             v-model="msg"
         />
-        <button h-70 m-2 i-carbon-send-alt-filled @click="send" />
+        <button
+            :plain="!free"
+            h-70
+            m-2
+            center
+            style="border: 0px solid rgba(255, 255, 255, 0.5)"
+            :loading="!free"
+            @click="send"
+            :class="free ? 'i-carbon-send-alt-filled' : ''"
+        />
     </view>
 </template>
 
@@ -20,9 +31,16 @@ const emits = defineEmits<{
     (e: "send", msg: string): void;
 }>();
 
+const porps = defineProps<{
+    free: boolean; //判断是否空闲
+}>();
+
 const msg = ref("");
 
 function send() {
-    emits("send", msg.value);
+    if (msg.value && porps.free) {
+        emits("send", msg.value);
+        msg.value = "";
+    }
 }
 </script>

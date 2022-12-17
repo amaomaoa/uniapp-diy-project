@@ -1,5 +1,6 @@
 <template>
     <view
+        @click="addToMyConfigs"
         text-size-25
         m-2
         flex
@@ -11,8 +12,10 @@
             :class="type == 1 ? 'left-avatar' : 'right-avatar'"
         ></image>
         <view center :class="type == 1 ? 'left-card' : 'right-card'">
-            {{ msg }}</view
-        >
+            <text user-select>
+                {{ msg }}
+            </text>
+        </view>
         <view flex-1></view>
     </view>
 </template>
@@ -23,12 +26,22 @@
  * @param type 消息类型
  * @param color 卡片颜色
  */
-defineProps<{
+const props = defineProps<{
     msg: string;
     type: 1 | 2;
     color: string;
     avatar: string;
+    configs?: Configs;
 }>();
+
+const emit = defineEmits<{
+    (e: "addToMyConfigs", configs: Configs): void;
+}>();
+function addToMyConfigs() {
+    if (props.configs) {
+        emit("addToMyConfigs", props.configs);
+    }
+}
 </script>
 
 <style scoped>

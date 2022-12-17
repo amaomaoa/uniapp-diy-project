@@ -3,20 +3,19 @@
         <scroll-view
             :scroll-with-animation="true"
             :scroll-y="true"
-            :refresher-triggered="refresher"
-            @scroll="dragging"
             :refresher-enabled="true"
             :scroll-top="scrollTop"
-            @refresherrefresh="addmsg"
             h-100%
         >
             <MessageCard
-                v-for="m in msg"
-                :key="m.idx"
+                v-for="(m, item) in msgs"
+                :key="item"
                 :msg="m.msg"
                 :color="m.color"
                 :type="m.type"
                 :avatar="m.avatar"
+                :configs="m.configs"
+                @addToMyConfigs="addToMyConfigs"
             ></MessageCard>
         </scroll-view>
     </view>
@@ -24,59 +23,29 @@
 
 <script setup lang="ts">
 import MessageCard from "~/components/MessageCard/MessageCard.vue";
-import { onMounted, ref } from "vue";
+import { ref, defineProps } from "vue";
 // const footer = ref("footer");
-const refresher = ref(false);
+// const refresher = ref(false);
 const scrollTop = ref<Number>();
-const msg = ref(
-    new Array<{
-        idx: number;
-        msg: string;
-        type: 1 | 2;
-        color: string;
-        avatar: string;
-    }>()
-);
-const values = ref(100);
 
-onMounted(() => {
-    addmsg();
-    gotoButtom();
-});
-
-function addmsg() {
-    refresher.value = true;
-
-    let arr = msg.value;
-    for (let i = 0; i < 5; i++) {
-        values.value--;
-        arr.unshift({
-            idx: values.value,
-            msg:
-                `
-            注意点：1. scroll-view要有明确的高度
-2. bottomId和要滚动到的组件的id要一致，且是变化的
-3. 使用setTimeout方法来延迟更改变量
-` + values.value.toString(),
-            type: values.value % 2 == 0 ? 1 : 2,
-            color: "red",
-            avatar: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
-        });
-    }
-    setTimeout(() => {
-        refresher.value = false;
-    }, 10);
-}
-
+const props = defineProps<{
+    msgs: ChatMsg[];
+}>();
 function gotoButtom() {
     // TODO 还要算一下
-    scrollTop.value = msg.value.length * 1000 - 1;
+    scrollTop.value = 999999;
     setTimeout(() => {
-        scrollTop.value = msg.value.length * 1000;
+        scrollTop.value = 999999 + 100;
     }, 10);
 }
+const emit = defineEmits<{
+    (e: "addToMyConfigs", configs: Configs): void;
+}>();
 
-function dragging(e: any) {}
+function addToMyConfigs(configs: Configs) {
+    emit("addToMyConfigs", configs);
+}
+
 defineExpose({
     gotoButtom,
 });
